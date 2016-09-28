@@ -3,7 +3,6 @@ package com.algerd.musicbookspringmaven.repository.albumgenre;
 
 import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
 import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.repository.albumgenre.query.DeleteAlbumGenreByAlbum;

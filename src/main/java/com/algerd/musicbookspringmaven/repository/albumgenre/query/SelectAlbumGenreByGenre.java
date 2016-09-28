@@ -3,7 +3,7 @@ package com.algerd.musicbookspringmaven.repository.albumgenre.query;
 
 import com.algerd.musicbookspringmaven.dbDriver.BaseRepository;
 import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
 import com.algerd.musicbookspringmaven.entity.Artist;
 import java.sql.ResultSet;
 import java.sql.SQLException;

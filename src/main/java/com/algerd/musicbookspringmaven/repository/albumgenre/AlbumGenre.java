@@ -1,9 +1,11 @@
 
-package com.algerd.musicbookspringmaven.entity;
+package com.algerd.musicbookspringmaven.repository.albumgenre;
 
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Column;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Table;
+import com.algerd.musicbookspringmaven.entity.Album;
+import com.algerd.musicbookspringmaven.entity.Genre;
 
 @Table("album_genre")
 public class AlbumGenre extends Entity {

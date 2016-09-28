@@ -3,7 +3,6 @@ package com.algerd.musicbookspringmaven.repository.albumgenre;
 
 import com.algerd.musicbookspringmaven.dbDriver.CrudRepository;
 import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import java.util.List;
 

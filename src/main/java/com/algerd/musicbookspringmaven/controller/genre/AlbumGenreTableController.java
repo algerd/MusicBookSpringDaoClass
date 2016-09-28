@@ -5,7 +5,7 @@ import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.A
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ALBUM;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ALBUM;
 import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;

@@ -21,7 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.controller.helper.inputImageBox.DialogImageBoxController;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
 import com.algerd.musicbookspringmaven.entity.Artist;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;

@@ -12,7 +12,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.beans.value.ObservableValue;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.utils.Helper;
 

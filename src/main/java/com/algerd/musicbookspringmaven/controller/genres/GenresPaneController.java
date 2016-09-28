@@ -19,7 +19,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
 import com.algerd.musicbookspringmaven.entity.ArtistGenre;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;

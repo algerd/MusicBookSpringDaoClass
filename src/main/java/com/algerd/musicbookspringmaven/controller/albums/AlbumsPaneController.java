@@ -31,7 +31,7 @@ import com.algerd.musicbookspringmaven.entity.Artist;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.Params;
-import com.algerd.musicbookspringmaven.entity.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
 
 public class AlbumsPaneController extends BasePaneController {
