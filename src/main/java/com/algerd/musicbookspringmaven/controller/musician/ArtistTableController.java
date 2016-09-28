@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.entity.MusicianGroup;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN_GROUP;
@@ -112,7 +112,7 @@ public class ArtistTableController extends BaseIncludeController<MusicianPaneCon
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Artist artist = repositoryService.getArtistRepository().selectById(selectedItem.getArtist().getId());
+                ArtistEntity artist = repositoryService.getArtistRepository().selectById(selectedItem.getArtist().getId());
                 requestPageService.artistPane(artist);
             }
         }

@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Musician;
 import com.algerd.musicbookspringmaven.entity.MusicianGroup;
@@ -23,7 +23,7 @@ public class MusicianGroupDialogController extends BaseDialogController {
     @FXML
     private ChoiceBox<Musician> musicianChoiceBox;
     @FXML
-    private ChoiceBox<Artist> artistChoiceBox;
+    private ChoiceBox<ArtistEntity> artistChoiceBox;
     @FXML
     private DatePicker startDatePicker;
     @FXML
@@ -43,7 +43,7 @@ public class MusicianGroupDialogController extends BaseDialogController {
     private void handleOkButton() {
         if (isInputValid()) {
             Musician musician = musicianChoiceBox.getValue();
-            Artist artist = artistChoiceBox.getValue();
+            ArtistEntity artist = artistChoiceBox.getValue();
             if (!repositoryService.getMusicianGroupRepository().containsMusicianArtist(musician, artist)) {
                 musicianGroup.setId_artist(artistChoiceBox.getValue().getId());
                 musicianGroup.setId_musician(musicianChoiceBox.getValue().getId());

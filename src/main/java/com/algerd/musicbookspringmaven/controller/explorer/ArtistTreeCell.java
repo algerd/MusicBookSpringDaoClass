@@ -4,8 +4,8 @@ package com.algerd.musicbookspringmaven.controller.explorer;
 import javafx.scene.control.TreeCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Song;
 import static com.algerd.musicbookspringmaven.Params.DIR_IMAGES;
@@ -20,12 +20,12 @@ public class ArtistTreeCell extends TreeCell<Entity> {
             setText(null);
             setGraphic(null);
         } else {
-            if (item instanceof Artist) {
-                textProperty().bind(((Artist) item).nameProperty());
+            if (item instanceof ArtistEntity) {
+                textProperty().bind(((ArtistEntity) item).nameProperty());
                 setGraphic(getIcon("folder.jpg"));
             }
-            else if (item instanceof Album) {
-                textProperty().bind(((Album) item).nameProperty());
+            else if (item instanceof AlbumEntity) {
+                textProperty().bind(((AlbumEntity) item).nameProperty());
                 setGraphic(getIcon("file.jpg"));
             }
             else if (item instanceof Song) {

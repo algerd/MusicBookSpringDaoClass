@@ -4,8 +4,8 @@ package com.algerd.musicbookspringmaven.controller.explorer;
 import java.util.Comparator;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeView;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Song;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
@@ -53,11 +53,10 @@ public class TreeViewTableListener {
     }
     
     private void updatedArtistName(ObservableValue<? extends Object> observable, Object oldVal, Object newVal) {
-        Artist newEntity = ((WrapChangedEntity<Artist>) newVal).getNew();
-        Artist oldEntity = ((WrapChangedEntity<Artist>) newVal).getOld();
+        ArtistEntity newEntity = ((WrapChangedEntity<ArtistEntity>) newVal).getNew();
+        ArtistEntity oldEntity = ((WrapChangedEntity<ArtistEntity>) newVal).getOld();
         if (!newEntity.getName().equals(oldEntity.getName())) {
-            rootTreeItem.getChildren().sort(Comparator.comparing(
-                e -> ((Artist) e.getValue()).getName()
+            rootTreeItem.getChildren().sort(Comparator.comparing(e -> ((ArtistEntity) e.getValue()).getName()
             ));
         }
     }
@@ -74,21 +73,20 @@ public class TreeViewTableListener {
       
     private void addedArtist(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {        
         Entity entity = ((WrapChangedEntity<Entity>) newValue).getNew();        
-        if (entity != null && entity instanceof Artist) {
+        if (entity != null && entity instanceof ArtistEntity) {
             artistTree.getSelectionModel().clearSelection();
             ArtistTreeItem artistItem = new ArtistTreeItem((Entity) entity, repositoryService);
             rootTreeItem.getChildren().add(artistItem);
-            rootTreeItem.getChildren().sort(Comparator.comparing(
-                e -> ((Artist) e.getValue()).getName()
+            rootTreeItem.getChildren().sort(Comparator.comparing(e -> ((ArtistEntity) e.getValue()).getName()
             ));
         }    
     }
     
     private void addedAlbum(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) { 
         Entity entity = ((WrapChangedEntity<Entity>) newValue).getNew();
-        if (entity != null && entity instanceof Album) {
+        if (entity != null && entity instanceof AlbumEntity) {
             artistTree.getSelectionModel().clearSelection();
-            Entity parentEntity = repositoryService.getArtistRepository().selectById(((Album) entity).getId_artist());
+            Entity parentEntity = repositoryService.getArtistRepository().selectById(((AlbumEntity) entity).getId_artist());
             searchTreeItem(rootTreeItem, parentEntity).reset();
         }    
     }

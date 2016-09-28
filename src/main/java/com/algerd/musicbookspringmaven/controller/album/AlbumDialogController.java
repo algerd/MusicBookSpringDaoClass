@@ -20,9 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.controller.helper.inputImageBox.DialogImageBoxController;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.Params;
@@ -30,7 +30,7 @@ import com.algerd.musicbookspringmaven.controller.helper.choiceCheckBox.ChoiceCh
 
 public class AlbumDialogController extends BaseDialogController {
         
-    private Album album;
+    private AlbumEntity album;
       
     private final IntegerProperty rating = new SimpleIntegerProperty();
     private final IntegerProperty year = new SimpleIntegerProperty();
@@ -40,7 +40,7 @@ public class AlbumDialogController extends BaseDialogController {
     @FXML
     private AnchorPane view;
     @FXML
-    private ChoiceBox<Artist> artistField;  
+    private ChoiceBox<ArtistEntity> artistField;  
     @FXML
     private TextField nameField;
     @FXML
@@ -98,7 +98,7 @@ public class AlbumDialogController extends BaseDialogController {
     @FXML
     private void handleOkButton() {
         if (isInputValid()) {
-            Artist artist = artistField.getValue();                         
+            ArtistEntity artist = artistField.getValue();                         
             album.setId_artist(artist.getId());
             album.setName(nameField.getText().trim());             
             album.setTime(getMinute() + ":" + ((getSecund() < 10) ? "0" : "") + getSecund());                     
@@ -119,7 +119,7 @@ public class AlbumDialogController extends BaseDialogController {
             for (Genre genre : includedChoiceCheckBoxController.getItemMap().keySet()) {
                 ObservableValue<Boolean> value = includedChoiceCheckBoxController.getItemMap().get(genre);
                 if (value.getValue()) {
-                    AlbumGenre albumGenre = new AlbumGenre();
+                    AlbumGenreEntity albumGenre = new AlbumGenreEntity();
                     albumGenre.setId_album(album.getId());
                     albumGenre.setId_genre(genre.getId());
                     repositoryService.getAlbumGenreRepository().save(albumGenre);
@@ -187,7 +187,7 @@ public class AlbumDialogController extends BaseDialogController {
           
     @Override
     protected void add() {   
-        Artist artist = repositoryService.getArtistRepository().selectById(album.getId_artist());         
+        ArtistEntity artist = repositoryService.getArtistRepository().selectById(album.getId_artist());         
         artistField.getSelectionModel().select(artist);
         includedDialogImageBoxController.setEntity(album);
         initGenreChoiceCheckBox();
@@ -195,7 +195,7 @@ public class AlbumDialogController extends BaseDialogController {
    
     @Override
     public void setEntity(Entity entity) {
-        album = (Album) entity;
+        album = (AlbumEntity) entity;
         super.setEntity(entity);
     }
        

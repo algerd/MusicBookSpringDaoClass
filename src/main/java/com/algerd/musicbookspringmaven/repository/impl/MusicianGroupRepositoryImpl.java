@@ -2,7 +2,7 @@
 package com.algerd.musicbookspringmaven.repository.impl;
 
 import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.entity.Musician;
 import com.algerd.musicbookspringmaven.entity.MusicianGroup;
 import com.algerd.musicbookspringmaven.repository.MusicianGroupRepository;
@@ -32,11 +32,10 @@ public class MusicianGroupRepositoryImpl extends CrudRepositoryImpl<MusicianGrou
             prepareQuery, 
             new int[] {Types.INTEGER}    
         );      
-        return jdbcTemplate.query(
-            pscf.newPreparedStatementCreator(new Object[] {musician.getId()}), 
+        return jdbcTemplate.query(pscf.newPreparedStatementCreator(new Object[] {musician.getId()}), 
             (ResultSet resultSet, int rowNum) -> {
                 MusicianGroup musicianGroup = getEntity(resultSet);
-                Artist artist = new Artist();
+                ArtistEntity artist = new ArtistEntity();
                 artist.setId(musicianGroup.getId_artist());
                 artist.setName(resultSet.getString(6));
                 artist.setRating(resultSet.getInt(7));
@@ -47,7 +46,7 @@ public class MusicianGroupRepositoryImpl extends CrudRepositoryImpl<MusicianGrou
     }
     
     @Override
-    public List<MusicianGroup> selectJoinByArtist(Artist artist) {
+    public List<MusicianGroup> selectJoinByArtist(ArtistEntity artist) {
         String prepareQuery = 
             "select "
                 + "musician_group.id, "
@@ -80,7 +79,7 @@ public class MusicianGroupRepositoryImpl extends CrudRepositoryImpl<MusicianGrou
     }
     
     @Override
-    public boolean containsMusicianArtist(Musician musician, Artist artist) {
+    public boolean containsMusicianArtist(Musician musician, ArtistEntity artist) {
         String prepareQuery = "select count(id) from " + getTableName() + " where id_musician = ? and id_artist = ?";
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
             prepareQuery, 

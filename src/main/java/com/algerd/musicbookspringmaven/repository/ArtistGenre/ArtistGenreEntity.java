@@ -1,12 +1,14 @@
 
-package com.algerd.musicbookspringmaven.entity;
+package com.algerd.musicbookspringmaven.repository.ArtistGenre;
 
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Column;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Table;
+import com.algerd.musicbookspringmaven.entity.Genre;
 
 @Table("artist_genre")
-public class ArtistGenre extends Entity {
+public class ArtistGenreEntity extends Entity {
     @Column("id")
     private int id = 0;
     @Column("id_genre")
@@ -15,9 +17,9 @@ public class ArtistGenre extends Entity {
     private int id_artist = 0;
     
     private Genre genre;
-    private Artist artist;
+    private ArtistEntity artist;
     
-    public ArtistGenre() {
+    public ArtistGenreEntity() {
         super();
     }
     
@@ -27,8 +29,8 @@ public class ArtistGenre extends Entity {
 			return true;
 		if (obj == null)
 			return false;
-		if (obj instanceof ArtistGenre) {
-            Entity entity = (ArtistGenre) obj;
+		if (obj instanceof ArtistGenreEntity) {
+            Entity entity = (ArtistGenreEntity) obj;
             if (entity.getId() == getId()) {
                 return true;
             }
@@ -71,10 +73,10 @@ public class ArtistGenre extends Entity {
         this.genre = genre;
     }
 
-    public Artist getArtist() {
+    public ArtistEntity getArtist() {
         return artist;
     }
-    public void setArtist(Artist artist) {
+    public void setArtist(ArtistEntity artist) {
         this.artist = artist;
     }
        

@@ -1,8 +1,8 @@
 
-package com.algerd.musicbookspringmaven.repository.albumgenre.query;
+package com.algerd.musicbookspringmaven.repository.AlbumGenre.query;
 
 import com.algerd.musicbookspringmaven.dbDriver.BaseRepository;
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,11 +14,11 @@ import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.stereotype.Component;
 
 @Component("selectAlbumGenreByAlbum")
-public class SelectAlbumGenreByAlbum extends MappingSqlQuery<AlbumGenre> {
+public class SelectAlbumGenreByAlbum extends MappingSqlQuery<AlbumGenreEntity> {
     
-    private BaseRepository<AlbumGenre> repository;
+    private BaseRepository<AlbumGenreEntity> repository;
     
-    private static final String SELECT_ALBUMGENRE_BY_ALBUM = 
+    private static final String QUERY = 
         "select "
                 + "album_genre.id, "
                 + "album_genre.id_genre, "
@@ -31,13 +31,14 @@ public class SelectAlbumGenreByAlbum extends MappingSqlQuery<AlbumGenre> {
 
     @Autowired        
     public SelectAlbumGenreByAlbum(DataSource dataSource) {
-        super(dataSource, SELECT_ALBUMGENRE_BY_ALBUM);
-        declareParameter(new SqlParameter("id_album", Types.INTEGER));
+        super(dataSource, QUERY);
+        super.declareParameter(new SqlParameter("id_album", Types.INTEGER));
         compile();
     }
      
-    protected AlbumGenre mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-        AlbumGenre albumGenre = repository.getEntity(resultSet);
+    @Override
+    protected AlbumGenreEntity mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+        AlbumGenreEntity albumGenre = repository.getEntity(resultSet);
         Genre genre = new Genre();
         genre.setId(albumGenre.getId_genre());
         genre.setName(resultSet.getString("name"));
@@ -45,7 +46,7 @@ public class SelectAlbumGenreByAlbum extends MappingSqlQuery<AlbumGenre> {
         return albumGenre;
     }
 
-    public void setRepository(BaseRepository<AlbumGenre> repository) {
+    public void setRepository(BaseRepository<AlbumGenreEntity> repository) {
         this.repository = repository;
     }
     

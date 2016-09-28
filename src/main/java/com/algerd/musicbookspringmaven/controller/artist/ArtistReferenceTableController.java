@@ -21,7 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import com.algerd.musicbookspringmaven.entity.ArtistReference;
+import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceEntity;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import javafx.stage.Stage;
@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ArtistReferenceTableController extends BaseIncludeController<ArtistPaneController> {
        
-    private ArtistReference selectedItem;
+    private ArtistReferenceEntity selectedItem;
     
     @Autowired
     private Stage primaryStage;
@@ -37,11 +37,11 @@ public class ArtistReferenceTableController extends BaseIncludeController<Artist
     @FXML
     private AnchorPane artistReferenceTable;
     @FXML
-    private TableView<ArtistReference> artistReferenceTableView;
+    private TableView<ArtistReferenceEntity> artistReferenceTableView;
     @FXML
-    private TableColumn<ArtistReference, String> nameReferenceColumn;
+    private TableColumn<ArtistReferenceEntity, String> nameReferenceColumn;
     @FXML
-    private TableColumn<ArtistReference, String> referenceColumn;   
+    private TableColumn<ArtistReferenceEntity, String> referenceColumn;   
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,8 +57,8 @@ public class ArtistReferenceTableController extends BaseIncludeController<Artist
     }
     
     private void setTableValue() {
-        ObservableList<ArtistReference> artistReferences = 
-            FXCollections.observableArrayList(repositoryService.getArtistReferenceRepository().selectByArtist(paneController.getArtist()));
+        ObservableList<ArtistReferenceEntity> artistReferences = 
+            FXCollections.observableArrayList(repositoryService.getArtistReferenceRepository().selectArtistReferenceByArtist(paneController.getArtist()));
         clearSelectionTable();
         artistReferenceTableView.getItems().clear();
         artistReferenceTableView.setItems(artistReferences);
@@ -87,7 +87,7 @@ public class ArtistReferenceTableController extends BaseIncludeController<Artist
     }
     
     private void added(ObservableValue observable, Object oldVal, Object newVal) {  
-        ArtistReference newEntity = ((WrapChangedEntity<ArtistReference>) newVal).getNew();       
+        ArtistReferenceEntity newEntity = ((WrapChangedEntity<ArtistReferenceEntity>) newVal).getNew();       
         if (newEntity.getId_artist() == paneController.getArtist().getId()) {
             artistReferenceTableView.getItems().add(newEntity);
             sort();
@@ -95,7 +95,7 @@ public class ArtistReferenceTableController extends BaseIncludeController<Artist
     }
     
     private void deleted(ObservableValue observable, Object oldVal, Object newVal) {
-        ArtistReference newEntity = ((WrapChangedEntity<ArtistReference>) newVal).getNew();
+        ArtistReferenceEntity newEntity = ((WrapChangedEntity<ArtistReferenceEntity>) newVal).getNew();
         if (newEntity.getId_artist() == paneController.getArtist().getId()) {
             artistReferenceTableView.getItems().removeAll(newEntity);
             clearSelectionTable();
@@ -103,8 +103,8 @@ public class ArtistReferenceTableController extends BaseIncludeController<Artist
     }
 
     private void updated(ObservableValue observable, Object oldVal, Object newVal) {
-        ArtistReference oldEntity = ((WrapChangedEntity<ArtistReference>) newVal).getOld();
-        ArtistReference newEntity = ((WrapChangedEntity<ArtistReference>) newVal).getNew();
+        ArtistReferenceEntity oldEntity = ((WrapChangedEntity<ArtistReferenceEntity>) newVal).getOld();
+        ArtistReferenceEntity newEntity = ((WrapChangedEntity<ArtistReferenceEntity>) newVal).getNew();
         if (oldEntity.getId_artist() == paneController.getArtist().getId()) {
             artistReferenceTableView.getItems().removeAll(oldEntity);
         }
@@ -116,7 +116,7 @@ public class ArtistReferenceTableController extends BaseIncludeController<Artist
     
     private void sort() {
         clearSelectionTable();
-        artistReferenceTableView.getItems().sort(Comparator.comparing(ArtistReference::getName));
+        artistReferenceTableView.getItems().sort(Comparator.comparing(ArtistReferenceEntity::getName));
     }
 
     public void clearSelectionTable() {
@@ -160,7 +160,7 @@ public class ArtistReferenceTableController extends BaseIncludeController<Artist
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            ArtistReference artistReference = new ArtistReference();
+            ArtistReferenceEntity artistReference = new ArtistReferenceEntity();
             artistReference.setId_artist(paneController.getArtist().getId());
             contextMenuService.add(ADD_ARTIST_REFERENCE, artistReference);    
             if (selectedItem != null) {

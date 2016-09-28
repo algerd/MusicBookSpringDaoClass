@@ -1,11 +1,11 @@
 
 package com.algerd.musicbookspringmaven.spring.config;
 
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenreRepository;
-import com.algerd.musicbookspringmaven.repository.AlbumRepository;
-import com.algerd.musicbookspringmaven.repository.ArtistGenreRepository;
-import com.algerd.musicbookspringmaven.repository.ArtistReferenceRepository;
-import com.algerd.musicbookspringmaven.repository.ArtistRepository;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreRepository;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumRepository;
+import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreRepository;
+import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceRepository;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistRepository;
 import com.algerd.musicbookspringmaven.repository.GenreRepository;
 import com.algerd.musicbookspringmaven.repository.InstrumentRepository;
 import com.algerd.musicbookspringmaven.repository.MusicianAlbumRepository;
@@ -16,11 +16,11 @@ import com.algerd.musicbookspringmaven.repository.MusicianRepository;
 import com.algerd.musicbookspringmaven.repository.MusicianSongRepository;
 import com.algerd.musicbookspringmaven.repository.SongGenreRepository;
 import com.algerd.musicbookspringmaven.repository.SongRepository;
-import com.algerd.musicbookspringmaven.repository.impl.AlbumRepositoryImpl;
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenreRepositoryImpl;
-import com.algerd.musicbookspringmaven.repository.impl.ArtistGenreRepositoryImpl;
-import com.algerd.musicbookspringmaven.repository.impl.ArtistReferenceRepositoryImpl;
-import com.algerd.musicbookspringmaven.repository.impl.ArtistRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistRepositoryImpl;
 import com.algerd.musicbookspringmaven.repository.impl.GenreRepositoryImpl;
 import com.algerd.musicbookspringmaven.repository.impl.InstrumentRepositoryImpl;
 import com.algerd.musicbookspringmaven.repository.impl.MusicianAlbumRepositoryImpl;

@@ -21,8 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.controller.helper.choiceCheckBox.ChoiceCheckBoxController;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.entity.Song;
@@ -41,9 +41,9 @@ public class SongDialogController extends BaseDialogController {
     @FXML
     private AnchorPane view;
     @FXML
-    private ChoiceBox<Artist> artistField;
+    private ChoiceBox<ArtistEntity> artistField;
     @FXML
-    private ChoiceBox<Album> albumField;
+    private ChoiceBox<AlbumEntity> albumField;
     @FXML
     private TextField nameField;
     @FXML
@@ -95,10 +95,10 @@ public class SongDialogController extends BaseDialogController {
     /**
      * При выборе другого артиста - обновить список альбомов в ChoiceBox albumField.
      */
-    private void changedArtistChoiceBox(ObservableValue<? extends Object> observable, Artist oldValue, Artist newValue) {          
+    private void changedArtistChoiceBox(ObservableValue<? extends Object> observable, ArtistEntity oldValue, ArtistEntity newValue) {          
         albumField.getItems().clear();
-        Artist artist = artistField.getSelectionModel().getSelectedItem();
-        albumField.getItems().addAll(repositoryService.getAlbumRepository().selectByArtist(artist));
+        ArtistEntity artist = artistField.getSelectionModel().getSelectedItem();
+        albumField.getItems().addAll(repositoryService.getAlbumRepository().selectAlbumByArtist(artist));
         albumField.getSelectionModel().select(0);
     }
     
@@ -122,7 +122,7 @@ public class SongDialogController extends BaseDialogController {
     @FXML
     private void handleOkButton() {
         if (isInputValid()) {
-            Album album = albumField.getValue();             
+            AlbumEntity album = albumField.getValue();             
             
             song.setId_album(album.getId());
             song.setName(nameField.getText());
@@ -215,8 +215,8 @@ public class SongDialogController extends BaseDialogController {
     
     @Override
     protected void add() {    
-        Album album = repositoryService.getAlbumRepository().selectById(song.getId_album());                          
-        Artist artist = repositoryService.getArtistRepository().selectById(album.getId_artist());
+        AlbumEntity album = repositoryService.getAlbumRepository().selectById(song.getId_album());                          
+        ArtistEntity artist = repositoryService.getArtistRepository().selectById(album.getId_artist());
         artistField.getSelectionModel().select(artist);
         albumField.getSelectionModel().select(album);
         includedDialogImageBoxController.setEntity(song);

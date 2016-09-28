@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.entity.Song;
 import com.algerd.musicbookspringmaven.service.RepositoryService;
 
@@ -40,11 +40,11 @@ public class ArtistTreeItem extends TreeItem {
 			leafPropertyComputed = true;            
 			Object obj = getValue();
                        
-            if (obj instanceof Artist) {               
-                leafNode = !repositoryService.getAlbumRepository().containsArtist((Artist) obj);
+            if (obj instanceof ArtistEntity) {               
+                leafNode = !repositoryService.getAlbumRepository().containsArtist((ArtistEntity) obj);
             }
-            else if (obj instanceof Album) {
-                leafNode = !repositoryService.getSongRepository().containsAlbum((Album) obj);          
+            else if (obj instanceof AlbumEntity) {
+                leafNode = !repositoryService.getSongRepository().containsAlbum((AlbumEntity) obj);          
             }
             else if (obj instanceof Song) {
                 leafNode = true;
@@ -60,15 +60,15 @@ public class ArtistTreeItem extends TreeItem {
 		getChildren().clear();
         Object obj = getValue();
         
-        if (obj instanceof Artist) {
-            List<Album> albums = repositoryService.getAlbumRepository().selectByArtist((Artist) obj);            
-            albums.sort(Comparator.comparingInt(Album::getYear));
-            for (Album album : albums) {
+        if (obj instanceof ArtistEntity) {
+            List<AlbumEntity> albums = repositoryService.getAlbumRepository().selectAlbumByArtist((ArtistEntity) obj);            
+            albums.sort(Comparator.comparingInt(AlbumEntity::getYear));
+            for (AlbumEntity album : albums) {
                 getChildren().add(new ArtistTreeItem(album, repositoryService));
             }            
         }
-        else if (obj instanceof Album) {
-            List<Song> songs = repositoryService.getSongRepository().selectByAlbum((Album) obj);
+        else if (obj instanceof AlbumEntity) {
+            List<Song> songs = repositoryService.getSongRepository().selectByAlbum((AlbumEntity) obj);
             songs.sort(Comparator.comparingInt(Song::getTrack));
             for (Song song : songs) {
                 getChildren().add(new ArtistTreeItem(song, repositoryService));

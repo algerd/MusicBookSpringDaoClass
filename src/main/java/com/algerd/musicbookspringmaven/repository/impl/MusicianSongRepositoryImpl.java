@@ -2,8 +2,8 @@
 package com.algerd.musicbookspringmaven.repository.impl;
 
 import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.entity.Musician;
 import com.algerd.musicbookspringmaven.entity.MusicianSong;
 import com.algerd.musicbookspringmaven.entity.Song;
@@ -39,8 +39,7 @@ public class MusicianSongRepositoryImpl extends CrudRepositoryImpl<MusicianSong>
             prepareQuery, 
             new int[] {Types.INTEGER}    
         );      
-        return jdbcTemplate.query(
-            pscf.newPreparedStatementCreator(new Object[] {musician.getId()}), 
+        return jdbcTemplate.query(pscf.newPreparedStatementCreator(new Object[] {musician.getId()}), 
             (ResultSet resultSet, int rowNum) -> {
                 MusicianSong musicianSong = getEntity(resultSet);
                 Song song = new Song();
@@ -48,13 +47,13 @@ public class MusicianSongRepositoryImpl extends CrudRepositoryImpl<MusicianSong>
                 song.setName(resultSet.getString(4));
                 song.setRating(resultSet.getInt(5));
 
-                Album album = new Album();
+                AlbumEntity album = new AlbumEntity();
                 album.setId(resultSet.getInt(6));
                 album.setName(resultSet.getString(7));
                 album.setYear(resultSet.getInt(8));
                 song.setAlbum(album);
 
-                Artist artist = new Artist();
+                ArtistEntity artist = new ArtistEntity();
                 artist.setId(resultSet.getInt(9));
                 artist.setName(resultSet.getString(10));
                 album.setArtist(artist);

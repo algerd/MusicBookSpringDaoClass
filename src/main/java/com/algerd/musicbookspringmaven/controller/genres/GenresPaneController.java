@@ -19,8 +19,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
-import com.algerd.musicbookspringmaven.entity.ArtistGenre;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
+import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.entity.MusicianGenre;
@@ -87,7 +87,7 @@ public class GenresPaneController extends BasePaneController {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        this.setText("" + repositoryService.getArtistGenreRepository().countArtistsByGenre(item));                   
+                        this.setText("" + repositoryService.getArtistGenreRepository().countArtistGenreByGenre(item));                   
                     }
                 }
             };
@@ -101,9 +101,9 @@ public class GenresPaneController extends BasePaneController {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        List<ArtistGenre> artistGenres = repositoryService.getArtistGenreRepository().selectJoinByGenre(item);
+                        List<ArtistGenreEntity> artistGenres = repositoryService.getArtistGenreRepository().selectArtistGenreByGenre(item);
                         int averageRating = 0;
-                        for (ArtistGenre artistGenre : artistGenres) {
+                        for (ArtistGenreEntity artistGenre : artistGenres) {
                             averageRating += artistGenre.getArtist().getRating();
                         }
                         int count = artistGenres.size();
@@ -121,7 +121,7 @@ public class GenresPaneController extends BasePaneController {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        this.setText("" + repositoryService.getAlbumGenreRepository().countAlbumsByGenre(item));                   
+                        this.setText("" + repositoryService.getAlbumGenreRepository().countAlbumGenreByGenre(item));                   
                     }
                 }
             };
@@ -135,9 +135,9 @@ public class GenresPaneController extends BasePaneController {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        List<AlbumGenre> albumGenres = repositoryService.getAlbumGenreRepository().selectAlbumGenreByGenre(item);
+                        List<AlbumGenreEntity> albumGenres = repositoryService.getAlbumGenreRepository().selectAlbumGenreByGenre(item);
                         int averageRating = 0;
-                        for (AlbumGenre albumGenre : albumGenres) {
+                        for (AlbumGenreEntity albumGenre : albumGenres) {
                             averageRating += albumGenre.getAlbum().getRating();
                         }
                         int count = albumGenres.size();

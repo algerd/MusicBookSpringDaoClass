@@ -23,17 +23,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.Params;
-import com.algerd.musicbookspringmaven.entity.ArtistGenre;
+import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
 
 public class ArtistsPaneController extends BasePaneController {
    
-    private Artist selectedItem;
-    private List<Artist> artists;
+    private ArtistEntity selectedItem;
+    private List<ArtistEntity> artists;
     // filter properties   
     private String searchString = "";
     private Genre genre;
@@ -53,13 +53,13 @@ public class ArtistsPaneController extends BasePaneController {
     private Label resetSearchLabel; 
     //table
     @FXML
-    private TableView<Artist> artistsTable;
+    private TableView<ArtistEntity> artistsTable;
     @FXML
-    private TableColumn<Artist, Integer> rankColumn;
+    private TableColumn<ArtistEntity, Integer> rankColumn;
     @FXML
-    private TableColumn<Artist, String> artistColumn;
+    private TableColumn<ArtistEntity, String> artistColumn;
     @FXML
-    private TableColumn<Artist, Integer> ratingColumn; 
+    private TableColumn<ArtistEntity, Integer> ratingColumn; 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {    
@@ -102,7 +102,7 @@ public class ArtistsPaneController extends BasePaneController {
     }
     
     private void added(ObservableValue observable, Object oldVal, Object newVal) {
-        Artist newEntity = ((WrapChangedEntity<Artist>) newVal).getNew();
+        ArtistEntity newEntity = ((WrapChangedEntity<ArtistEntity>) newVal).getNew();
         artists.add(newEntity);
         artistsTable.getItems().add(newEntity);
         sort();
@@ -111,7 +111,7 @@ public class ArtistsPaneController extends BasePaneController {
     }
     
     private void deleted(ObservableValue observable, Object oldVal, Object newVal) {
-        Artist newEntity = ((WrapChangedEntity<Artist>) newVal).getNew();
+        ArtistEntity newEntity = ((WrapChangedEntity<ArtistEntity>) newVal).getNew();
         artists.remove(newEntity);
         artistsTable.getItems().remove(newEntity);
         repeatFilter(); 
@@ -170,14 +170,14 @@ public class ArtistsPaneController extends BasePaneController {
     }
     
     private void filter() {
-        ObservableList<Artist> filteredList = FXCollections.observableArrayList();
+        ObservableList<ArtistEntity> filteredList = FXCollections.observableArrayList();
         int lengthSearch = searchString.length();       
-        for (Artist artist : artists) {          
+        for (ArtistEntity artist : artists) {          
             //фильтр по жанру артиста
             boolean isGenre = false;
             if (genre.getId() != -1) {              
-                List<ArtistGenre> artistGenres = repositoryService.getArtistGenreRepository().selectJoinByArtist(artist);
-                for (ArtistGenre artistGenre : artistGenres) {
+                List<ArtistGenreEntity> artistGenres = repositoryService.getArtistGenreRepository().selectArtistGenreByArtist(artist);
+                for (ArtistGenreEntity artistGenre : artistGenres) {
                     if (artistGenre.getId_genre() == genre.getId()) {
                         isGenre = true;
                         break;
@@ -200,7 +200,7 @@ public class ArtistsPaneController extends BasePaneController {
     }
     
     private void sort() {
-        artistsTable.getItems().sort(Comparator.comparingInt(Artist::getRating).reversed());
+        artistsTable.getItems().sort(Comparator.comparingInt(ArtistEntity::getRating).reversed());
     }
     
     private void clearSelectionTable() {
@@ -253,7 +253,7 @@ public class ArtistsPaneController extends BasePaneController {
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            contextMenuService.add(ADD_ARTIST, new Artist());
+            contextMenuService.add(ADD_ARTIST, new ArtistEntity());
             // запретить удаление и редактирование записи с id = 1 (Unknown artist)
             if (selectedItem != null && selectedItem.getId() != 1) {
                 contextMenuService.add(EDIT_ARTIST, selectedItem);
@@ -271,7 +271,7 @@ public class ArtistsPaneController extends BasePaneController {
         clearSelectionTable();
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {       
-            contextMenuService.add(ADD_ARTIST, new Artist());
+            contextMenuService.add(ADD_ARTIST, new ArtistEntity());
             contextMenuService.show(view, mouseEvent);
         }      
     }

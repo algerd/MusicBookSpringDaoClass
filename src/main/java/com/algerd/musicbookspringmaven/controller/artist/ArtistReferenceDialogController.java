@@ -5,14 +5,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import com.algerd.musicbookspringmaven.entity.ArtistReference;
+import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import javafx.scene.layout.AnchorPane;
 
 public class ArtistReferenceDialogController extends BaseDialogController {
 
-    private ArtistReference artistReference;
+    private ArtistReferenceEntity artistReference;
     
     @FXML
     private AnchorPane view;
@@ -69,8 +69,8 @@ public class ArtistReferenceDialogController extends BaseDialogController {
         
     @Override
     public void setEntity(Entity entity) {
-        if (entity instanceof ArtistReference) {
-            artistReference = (ArtistReference) entity;
+        if (entity instanceof ArtistReferenceEntity) {
+            artistReference = (ArtistReferenceEntity) entity;
             if (artistReference.getId() != 0) {
                 dialogStage.setTitle("Edit Artist Reference"); 
             } 

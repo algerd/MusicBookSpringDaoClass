@@ -16,8 +16,8 @@ import javafx.scene.control.TabPane;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Song;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
@@ -27,8 +27,8 @@ import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.E
 
 public class SongPaneController extends BasePaneController {
    
-    private Artist artist;
-    private Album album;
+    private ArtistEntity artist;
+    private AlbumEntity album;
     private Song song;
     private File file;
     private long imageLastModified;

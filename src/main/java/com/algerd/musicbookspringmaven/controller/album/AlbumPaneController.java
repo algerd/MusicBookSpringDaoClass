@@ -21,16 +21,16 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
-import com.algerd.musicbookspringmaven.entity.Artist;
-import com.algerd.musicbookspringmaven.entity.Album;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 
 public class AlbumPaneController extends BasePaneController {
       
-    private Artist artist;
-    private Album album;
+    private ArtistEntity artist;
+    private AlbumEntity album;
     private File file;
     private long imageLastModified;  
     
@@ -72,7 +72,7 @@ public class AlbumPaneController extends BasePaneController {
     
     @Override
     public void show(Entity entity) {
-        this.album = (Album) entity;            
+        this.album = (AlbumEntity) entity;            
         showDetails();
         view.setVisible(true);
         initRepositoryListeners();
@@ -91,7 +91,7 @@ public class AlbumPaneController extends BasePaneController {
     }
        
     private void deletedAlbum(ObservableValue observable, Object oldVal, Object newVal) {
-        Album newEntity = ((WrapChangedEntity<Album>) newVal).getNew();
+        AlbumEntity newEntity = ((WrapChangedEntity<AlbumEntity>) newVal).getNew();
         if (newEntity.getId() == album.getId()) {
             view.setVisible(false);
         }
@@ -132,7 +132,7 @@ public class AlbumPaneController extends BasePaneController {
     private void showContextMenu(MouseEvent mouseEvent) {
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-            Album newAlbum = new Album();
+            AlbumEntity newAlbum = new AlbumEntity();
             newAlbum.setId_artist(album.getId_artist());            
             contextMenuService.add(ADD_ALBUM, newAlbum);
             // запретить удаление и редактирование записи с id = 1 (Unknown album)
@@ -145,7 +145,7 @@ public class AlbumPaneController extends BasePaneController {
         }      
     }
     
-    public Album getAlbum() {
+    public AlbumEntity getAlbum() {
         return album;
     }
            

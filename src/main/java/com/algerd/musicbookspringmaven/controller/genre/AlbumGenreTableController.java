@@ -4,8 +4,8 @@ import com.algerd.musicbookspringmaven.controller.BaseIncludeController;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ALBUM;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ALBUM;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ALBUM;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
@@ -24,24 +24,24 @@ import com.algerd.musicbookspringmaven.utils.Helper;
 
 public class AlbumGenreTableController extends BaseIncludeController<GenrePaneController> {
       
-    private AlbumGenre selectedItem;
+    private AlbumGenreEntity selectedItem;
     
     @FXML
     private AnchorPane albumGenreTable;
     @FXML
     private Label titleLabel;    
     @FXML
-    private TableView<AlbumGenre> albumTableView;
+    private TableView<AlbumGenreEntity> albumTableView;
     @FXML
-    private TableColumn<AlbumGenre, Integer> rankColumn;
+    private TableColumn<AlbumGenreEntity, Integer> rankColumn;
     @FXML
-    private TableColumn<AlbumGenre, String> albumColumn;
+    private TableColumn<AlbumGenreEntity, String> albumColumn;
     @FXML
-    private TableColumn<AlbumGenre, Integer> yearColumn;
+    private TableColumn<AlbumGenreEntity, Integer> yearColumn;
     @FXML
-    private TableColumn<AlbumGenre, String> artistColumn;   
+    private TableColumn<AlbumGenreEntity, String> artistColumn;   
     @FXML
-    private TableColumn<AlbumGenre, Integer> ratingColumn;
+    private TableColumn<AlbumGenreEntity, Integer> ratingColumn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,7 +81,7 @@ public class AlbumGenreTableController extends BaseIncludeController<GenrePaneCo
     private void setTableValue() { 
         clearSelectionTable();
         albumTableView.getItems().clear();
-        List<AlbumGenre> albumGenres = repositoryService.getAlbumGenreRepository().selectAlbumGenreByGenre(paneController.getGenre());  
+        List<AlbumGenreEntity> albumGenres = repositoryService.getAlbumGenreRepository().selectAlbumGenreByGenre(paneController.getGenre());  
         albumTableView.setItems(FXCollections.observableArrayList(albumGenres));      
         sort();
         Helper.setHeightTable(albumTableView, 10);      
@@ -102,7 +102,7 @@ public class AlbumGenreTableController extends BaseIncludeController<GenrePaneCo
       
     private void sort() {
         clearSelectionTable();
-        albumTableView.getItems().sort(Comparator.comparingInt((AlbumGenre albumGenre) -> albumGenre.getAlbum().getRating()).reversed());
+        albumTableView.getItems().sort(Comparator.comparingInt((AlbumGenreEntity albumGenre) -> albumGenre.getAlbum().getRating()).reversed());
     }
     
     public void clearSelectionTable() {
@@ -125,15 +125,15 @@ public class AlbumGenreTableController extends BaseIncludeController<GenrePaneCo
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Album album = repositoryService.getAlbumRepository().selectById(selectedItem.getAlbum().getId());
+                AlbumEntity album = repositoryService.getAlbumRepository().selectById(selectedItem.getAlbum().getId());
                 requestPageService.albumPane(album);
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            contextMenuService.add(ADD_ALBUM, new Album());
+            contextMenuService.add(ADD_ALBUM, new AlbumEntity());
             // запретить удаление и редактирование записи с id = 1 (Unknown album)
             if (selectedItem != null && selectedItem.getId() != 1) {
-                Album album = repositoryService.getAlbumRepository().selectById(selectedItem.getAlbum().getId());
+                AlbumEntity album = repositoryService.getAlbumRepository().selectById(selectedItem.getAlbum().getId());
                 contextMenuService.add(EDIT_ALBUM, album);
                 contextMenuService.add(DELETE_ALBUM, album);                       
             }

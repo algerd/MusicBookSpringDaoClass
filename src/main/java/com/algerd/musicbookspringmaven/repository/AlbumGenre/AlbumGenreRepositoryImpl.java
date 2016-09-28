@@ -1,55 +1,43 @@
 
-package com.algerd.musicbookspringmaven.repository.albumgenre;
+package com.algerd.musicbookspringmaven.repository.AlbumGenre;
 
 import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
-import com.algerd.musicbookspringmaven.entity.Album;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
-import com.algerd.musicbookspringmaven.repository.albumgenre.query.DeleteAlbumGenreByAlbum;
-import com.algerd.musicbookspringmaven.repository.albumgenre.query.SelectAlbumGenreByAlbum;
-import com.algerd.musicbookspringmaven.repository.albumgenre.query.SelectAlbumGenreByGenre;
-import java.sql.ResultSet;
-import java.sql.Types;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.query.CountAlbumGenreByGenre;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.query.DeleteAlbumGenreByAlbum;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.query.SelectAlbumGenreByAlbum;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.query.SelectAlbumGenreByGenre;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 
-public class AlbumGenreRepositoryImpl extends CrudRepositoryImpl<AlbumGenre> implements AlbumGenreRepository {
+public class AlbumGenreRepositoryImpl extends CrudRepositoryImpl<AlbumGenreEntity> implements AlbumGenreRepository {
    
     private SelectAlbumGenreByGenre selectAlbumGenreByGenre;
     private SelectAlbumGenreByAlbum selectAlbumGenreByAlbum;
     private DeleteAlbumGenreByAlbum deleteAlbumGenreByAlbum;
+    private CountAlbumGenreByGenre countAlbumGenreByGenre;
      
     @Override
-    public List<AlbumGenre> selectAlbumGenreByAlbum(Album album) {
+    public List<AlbumGenreEntity> selectAlbumGenreByAlbum(AlbumEntity album) {
         return selectAlbumGenreByAlbum.execute(album.getId());
     }
     
     @Override
-    public List<AlbumGenre> selectAlbumGenreByGenre(Genre genre) {
+    public List<AlbumGenreEntity> selectAlbumGenreByGenre(Genre genre) {
         return selectAlbumGenreByGenre.execute(genre.getId());
     }    
   
     @Override
-    public void deleteAlbumGenreByAlbum(Album album) {
+    public void deleteAlbumGenreByAlbum(AlbumEntity album) {
         deleteAlbumGenreByAlbum.update(album.getId());  
         setDeleted(new WrapChangedEntity<>(null, null));
     }
-    
+       
     @Override
-    public int countAlbumsByGenre(Genre genre) {
-        String prepareQuery = 
-            "select count(id) "
-                + "from album_genre "
-                + "where id_genre = ?";      
-        PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
-            prepareQuery, 
-            new int[] {Types.INTEGER}    
-        ); 
-        return jdbcTemplate.query(pscf.newPreparedStatementCreator(
-            new Object[] {genre.getId()}), 
-            (ResultSet rs) -> rs.getInt(1)
-        );     
+    public int countAlbumGenreByGenre(Genre genre) {
+        return countAlbumGenreByGenre.findObject(genre.getId());       
     }
     
     @Autowired
@@ -68,5 +56,10 @@ public class AlbumGenreRepositoryImpl extends CrudRepositoryImpl<AlbumGenre> imp
     public void setDeleteAlbumGenreByAlbum(DeleteAlbumGenreByAlbum deleteAlbumGenreByAlbum) {
         this.deleteAlbumGenreByAlbum = deleteAlbumGenreByAlbum;
     }
-          
+
+    @Autowired
+    public void setCountAlbumGenreByGenre(CountAlbumGenreByGenre countAlbumGenreByGenre) {
+        this.countAlbumGenreByGenre = countAlbumGenreByGenre;
+    }
+             
 }

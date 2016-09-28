@@ -13,9 +13,9 @@ import javafx.scene.layout.Pane;
 import com.algerd.musicbookspringmaven.entity.Instrument;
 import com.algerd.musicbookspringmaven.entity.MusicianAlbum;
 import com.algerd.musicbookspringmaven.entity.MusicianSong;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
-import com.algerd.musicbookspringmaven.entity.ArtistReference;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
+import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.entity.Musician;
@@ -40,11 +40,11 @@ public class ContextMenuServiceImpl implements ContextMenuService {
         
         menuMap.put(ContextMenuItemType.ADD_ARTIST, e -> requestDialogService.artistDialog(valueMap.get(ContextMenuItemType.ADD_ARTIST)));      
         menuMap.put(ContextMenuItemType.EDIT_ARTIST, e -> requestDialogService.artistDialog(valueMap.get(ContextMenuItemType.EDIT_ARTIST)));            
-        menuMap.put(ContextMenuItemType.DELETE_ARTIST, e -> deleteAlertService.show((Artist) valueMap.get(ContextMenuItemType.DELETE_ARTIST)));      
+        menuMap.put(ContextMenuItemType.DELETE_ARTIST, e -> deleteAlertService.show((ArtistEntity) valueMap.get(ContextMenuItemType.DELETE_ARTIST)));      
         
         menuMap.put(ContextMenuItemType.ADD_ALBUM, e -> requestDialogService.albumDialog(valueMap.get(ContextMenuItemType.ADD_ALBUM)));
         menuMap.put(ContextMenuItemType.EDIT_ALBUM, e -> requestDialogService.albumDialog(valueMap.get(ContextMenuItemType.EDIT_ALBUM)));
-        menuMap.put(ContextMenuItemType.DELETE_ALBUM, e -> deleteAlertService.show((Album) valueMap.get(ContextMenuItemType.DELETE_ALBUM)));             
+        menuMap.put(ContextMenuItemType.DELETE_ALBUM, e -> deleteAlertService.show((AlbumEntity) valueMap.get(ContextMenuItemType.DELETE_ALBUM)));             
         
         menuMap.put(ContextMenuItemType.ADD_SONG, e -> requestDialogService.songDialog(valueMap.get(ContextMenuItemType.ADD_SONG)));       
         menuMap.put(ContextMenuItemType.EDIT_SONG, e -> requestDialogService.songDialog(valueMap.get(ContextMenuItemType.EDIT_SONG)));        
@@ -72,7 +72,7 @@ public class ContextMenuServiceImpl implements ContextMenuService {
         
         menuMap.put(ContextMenuItemType.ADD_ARTIST_REFERENCE, e -> requestDialogService.artistReferenceDialog(valueMap.get(ContextMenuItemType.ADD_ARTIST_REFERENCE)));
         menuMap.put(ContextMenuItemType.EDIT_ARTIST_REFERENCE, e -> requestDialogService.artistReferenceDialog(valueMap.get(ContextMenuItemType.EDIT_ARTIST_REFERENCE)));
-        menuMap.put(ContextMenuItemType.DELETE_ARTIST_REFERENCE, e -> deleteAlertService.show((ArtistReference) valueMap.get(ContextMenuItemType.DELETE_ARTIST_REFERENCE)));
+        menuMap.put(ContextMenuItemType.DELETE_ARTIST_REFERENCE, e -> deleteAlertService.show((ArtistReferenceEntity) valueMap.get(ContextMenuItemType.DELETE_ARTIST_REFERENCE)));
     
         menuMap.put(ContextMenuItemType.ADD_INSTRUMENT, e -> requestDialogService.instrumentDialog(valueMap.get(ContextMenuItemType.ADD_INSTRUMENT)));
         menuMap.put(ContextMenuItemType.EDIT_INSTRUMENT, e -> requestDialogService.instrumentDialog(valueMap.get(ContextMenuItemType.EDIT_INSTRUMENT)));

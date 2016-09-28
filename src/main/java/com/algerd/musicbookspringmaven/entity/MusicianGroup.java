@@ -1,6 +1,7 @@
 
 package com.algerd.musicbookspringmaven.entity;
 
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Column;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Table;
@@ -21,7 +22,7 @@ public class MusicianGroup extends Entity {
     private final StringProperty end_date = new SimpleStringProperty();
     
     private Musician musician;      
-    private Artist artist;
+    private ArtistEntity artist;
                  
     public MusicianGroup() {
         super();
@@ -95,10 +96,10 @@ public class MusicianGroup extends Entity {
         this.musician = musician;
     }
 
-    public Artist getArtist() {
+    public ArtistEntity getArtist() {
         return artist;
     }
-    public void setArtist(Artist artist) {
+    public void setArtist(ArtistEntity artist) {
         this.artist = artist;
     }
        

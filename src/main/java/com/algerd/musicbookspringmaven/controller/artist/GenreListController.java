@@ -13,7 +13,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.beans.value.ObservableValue;
-import com.algerd.musicbookspringmaven.entity.ArtistGenre;
+import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.utils.Helper;
 
@@ -36,7 +36,7 @@ public class GenreListController extends BaseIncludeController<ArtistPaneControl
     
     private void setListValue() {
         List<Genre> genres = new ArrayList<>();
-        List<ArtistGenre> artistGenres = repositoryService.getArtistGenreRepository().selectJoinByArtist(paneController.getArtist());
+        List<ArtistGenreEntity> artistGenres = repositoryService.getArtistGenreRepository().selectArtistGenreByArtist(paneController.getArtist());
         artistGenres.stream().forEach(artistGenre -> genres.add(artistGenre.getGenre())); 
         genreListView.getItems().clear();       
         if (!genres.isEmpty()) {

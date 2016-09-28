@@ -13,7 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import com.algerd.musicbookspringmaven.entity.Album;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ALBUM;
@@ -22,20 +22,20 @@ import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.E
 
 public class AlbumTableController extends BaseIncludeController<ArtistPaneController> {
     
-    private Album selectedItem;
+    private AlbumEntity selectedItem;
     
     @FXML
     private AnchorPane albumTable;
     @FXML
-    private TableView<Album> albumTableView;
+    private TableView<AlbumEntity> albumTableView;
     @FXML
-    private TableColumn<Album, String> albumNameColumn;
+    private TableColumn<AlbumEntity, String> albumNameColumn;
     @FXML
-    private TableColumn<Album, Integer> albumYearColumn;
+    private TableColumn<AlbumEntity, Integer> albumYearColumn;
     @FXML
-    private TableColumn<Album, String> albumTimeColumn;
+    private TableColumn<AlbumEntity, String> albumTimeColumn;
     @FXML
-    private TableColumn<Album, Integer> albumRatingColumn;  
+    private TableColumn<AlbumEntity, Integer> albumRatingColumn;  
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {    
@@ -63,8 +63,8 @@ public class AlbumTableController extends BaseIncludeController<ArtistPaneContro
     }
     
     private void setTableValue() {
-        ObservableList<Album> albums = 
-            FXCollections.observableArrayList(repositoryService.getAlbumRepository().selectByArtist(paneController.getArtist()));
+        ObservableList<AlbumEntity> albums = 
+            FXCollections.observableArrayList(repositoryService.getAlbumRepository().selectAlbumByArtist(paneController.getArtist()));
         clearSelectionTable();
         albumTableView.getItems().clear();
         albumTableView.setItems(albums);      
@@ -83,7 +83,7 @@ public class AlbumTableController extends BaseIncludeController<ArtistPaneContro
     }
     
     private void added(ObservableValue observable, Object oldVal, Object newVal) {
-        Album newEntity = ((WrapChangedEntity<Album>) newVal).getNew();
+        AlbumEntity newEntity = ((WrapChangedEntity<AlbumEntity>) newVal).getNew();
         if (newEntity.getId_artist() == paneController.getArtist().getId()) {
             albumTableView.getItems().add(newEntity);
             sort();
@@ -91,7 +91,7 @@ public class AlbumTableController extends BaseIncludeController<ArtistPaneContro
     }
     
     private void deleted(ObservableValue observable, Object oldVal, Object newVal) {
-        Album newEntity = ((WrapChangedEntity<Album>) newVal).getNew();
+        AlbumEntity newEntity = ((WrapChangedEntity<AlbumEntity>) newVal).getNew();
         if (newEntity.getId_artist() == paneController.getArtist().getId()) {
             albumTableView.getItems().removeAll(newEntity);
             clearSelectionTable();
@@ -99,8 +99,8 @@ public class AlbumTableController extends BaseIncludeController<ArtistPaneContro
     }
     
     private void updated(ObservableValue observable, Object oldVal, Object newVal) {
-        Album oldEntity = ((WrapChangedEntity<Album>) newVal).getOld();
-        Album newEntity = ((WrapChangedEntity<Album>) newVal).getNew(); 
+        AlbumEntity oldEntity = ((WrapChangedEntity<AlbumEntity>) newVal).getOld();
+        AlbumEntity newEntity = ((WrapChangedEntity<AlbumEntity>) newVal).getNew(); 
         if (oldEntity.getId_artist() == paneController.getArtist().getId()) {
             albumTableView.getItems().removeAll(oldEntity);
         }
@@ -112,7 +112,7 @@ public class AlbumTableController extends BaseIncludeController<ArtistPaneContro
     
     private void sort() {
         clearSelectionTable();
-        albumTableView.getItems().sort(Comparator.comparingInt(Album::getYear));
+        albumTableView.getItems().sort(Comparator.comparingInt(AlbumEntity::getYear));
     }
     
     public void clearSelectionTable() {
@@ -139,7 +139,7 @@ public class AlbumTableController extends BaseIncludeController<ArtistPaneContro
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            Album album = new Album();
+            AlbumEntity album = new AlbumEntity();
             album.setId_artist(paneController.getArtist().getId());  
             contextMenuService.add(ADD_ALBUM, album);
             // запретить удаление и редактирование записи с id = 1 (Unknown album)

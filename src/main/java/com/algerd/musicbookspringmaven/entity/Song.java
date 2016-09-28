@@ -1,6 +1,7 @@
 
 package com.algerd.musicbookspringmaven.entity;
 
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Column;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Table;
@@ -28,7 +29,7 @@ public class Song extends Entity {
     @Column("description")    
     private final StringProperty description = new SimpleStringProperty("");
     
-    private Album album;
+    private AlbumEntity album;
     
     public Song() {
         super();
@@ -126,10 +127,10 @@ public class Song extends Entity {
         return description;
     }
 
-    public Album getAlbum() {
+    public AlbumEntity getAlbum() {
         return album;
     }
-    public void setAlbum(Album album) {
+    public void setAlbum(AlbumEntity album) {
         this.album = album;
     }
         

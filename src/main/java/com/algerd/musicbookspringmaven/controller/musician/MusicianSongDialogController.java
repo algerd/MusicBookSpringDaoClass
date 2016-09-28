@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Musician;
 import com.algerd.musicbookspringmaven.entity.MusicianSong;
@@ -25,9 +25,9 @@ public class MusicianSongDialogController extends BaseDialogController {
     @FXML
     private ChoiceBox<Musician> musicianChoiceBox;
     @FXML
-    private ChoiceBox<Artist> artistChoiceBox;
+    private ChoiceBox<ArtistEntity> artistChoiceBox;
     @FXML
-    private ChoiceBox<Album> albumChoiceBox;
+    private ChoiceBox<AlbumEntity> albumChoiceBox;
     @FXML
     private ChoiceBox<Song> songChoiceBox;
   
@@ -54,11 +54,11 @@ public class MusicianSongDialogController extends BaseDialogController {
     /**
      * При выборе другого артиста - обновить список альбомов в albumChoiceBox.
      */
-    private void changedArtistChoiceBox(ObservableValue<? extends Object> observable, Artist oldValue, Artist newValue) {          
+    private void changedArtistChoiceBox(ObservableValue<? extends Object> observable, ArtistEntity oldValue, ArtistEntity newValue) {          
         albumChoiceBox.getItems().clear();
-        Artist artist = artistChoiceBox.getSelectionModel().getSelectedItem();
+        ArtistEntity artist = artistChoiceBox.getSelectionModel().getSelectedItem();
         if (artist != null) {
-            albumChoiceBox.getItems().addAll(repositoryService.getAlbumRepository().selectByArtist(artist));
+            albumChoiceBox.getItems().addAll(repositoryService.getAlbumRepository().selectAlbumByArtist(artist));
             albumChoiceBox.getSelectionModel().selectFirst();
         }    
     }
@@ -66,9 +66,9 @@ public class MusicianSongDialogController extends BaseDialogController {
     /**
      * При выборе другого альбома - обновить список песен songChoiceBox.
      */
-    private void changedAlbumChoiceBox(ObservableValue<? extends Object> observable, Album oldValue, Album newValue) {          
+    private void changedAlbumChoiceBox(ObservableValue<? extends Object> observable, AlbumEntity oldValue, AlbumEntity newValue) {          
         songChoiceBox.getItems().clear();
-        Album album = albumChoiceBox.getSelectionModel().getSelectedItem();
+        AlbumEntity album = albumChoiceBox.getSelectionModel().getSelectedItem();
         if (album != null) {
             songChoiceBox.getItems().addAll(repositoryService.getSongRepository().selectByAlbum(album));
             songChoiceBox.getSelectionModel().selectFirst();
@@ -105,8 +105,8 @@ public class MusicianSongDialogController extends BaseDialogController {
         musicianChoiceBox.getSelectionModel().select(repositoryService.getMusicianRepository().selectById(musicianSong.getId_musician()));
     
         Song song = repositoryService.getSongRepository().selectById(musicianSong.getId_song());
-        Album album = repositoryService.getAlbumRepository().selectById(song.getId_album()); 
-        Artist artist = repositoryService.getArtistRepository().selectById(album.getId_artist()); 
+        AlbumEntity album = repositoryService.getAlbumRepository().selectById(song.getId_album()); 
+        ArtistEntity artist = repositoryService.getArtistRepository().selectById(album.getId_artist()); 
         artistChoiceBox.getSelectionModel().select(artist);
         albumChoiceBox.getSelectionModel().select(album);
         songChoiceBox.getSelectionModel().select(song);

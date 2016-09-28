@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.Params;
@@ -26,7 +26,7 @@ import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.S
 
 public class ArtistPaneController extends BasePaneController {
       
-    private Artist artist;
+    private ArtistEntity artist;
     private File file;
     private long imageLastModified;
     
@@ -66,7 +66,7 @@ public class ArtistPaneController extends BasePaneController {
     
     @Override
     public void show(Entity entity) {       
-        this.artist = (Artist) entity;                          
+        this.artist = (ArtistEntity) entity;                          
         showDetails();
         view.setVisible(true);
         initRepositoryListeners();
@@ -86,7 +86,7 @@ public class ArtistPaneController extends BasePaneController {
     }
     
     private void deletedArtist(ObservableValue observable, Object oldVal, Object newVal) {
-        Artist newEntity = ((WrapChangedEntity<Artist>) newVal).getNew();
+        ArtistEntity newEntity = ((WrapChangedEntity<ArtistEntity>) newVal).getNew();
         if (newEntity.getId() == artist.getId()) {
             view.setVisible(false);
         }
@@ -117,7 +117,7 @@ public class ArtistPaneController extends BasePaneController {
     private void showContextMenu(MouseEvent mouseEvent) {
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {       
-            contextMenuService.add(ADD_ARTIST, new Artist());
+            contextMenuService.add(ADD_ARTIST, new ArtistEntity());
             // запретить удаление и редактирование записи с id = 1 (Unknown artist)
             if (artist.getId() != 1) {
                 contextMenuService.add(EDIT_ARTIST, artist);
@@ -128,7 +128,7 @@ public class ArtistPaneController extends BasePaneController {
         }      
     }
 
-    public Artist getArtist() {
+    public ArtistEntity getArtist() {
         return artist;
     }  
                

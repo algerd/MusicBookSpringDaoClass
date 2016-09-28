@@ -1,10 +1,10 @@
 
-package com.algerd.musicbookspringmaven.repository.albumgenre.query;
+package com.algerd.musicbookspringmaven.repository.AlbumGenre.query;
 
 import com.algerd.musicbookspringmaven.dbDriver.BaseRepository;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenre;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -15,11 +15,11 @@ import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.stereotype.Component;
 
 @Component("selectAlbumGenreByGenre")
-public class SelectAlbumGenreByGenre extends MappingSqlQuery<AlbumGenre> {
+public class SelectAlbumGenreByGenre extends MappingSqlQuery<AlbumGenreEntity> {
     
-    private BaseRepository<AlbumGenre> repository;
+    private BaseRepository<AlbumGenreEntity> repository;
     
-    private static final String SELECT_ALBUMGENRE_BY_GENRE = 
+    private static final String QUERY = 
         "select "
                 + "album_genre.id as id, "
                 + "album_genre.id_genre as id_genre, "
@@ -36,21 +36,22 @@ public class SelectAlbumGenreByGenre extends MappingSqlQuery<AlbumGenre> {
     
     @Autowired 
     public SelectAlbumGenreByGenre(DataSource dataSource) {
-        super(dataSource, SELECT_ALBUMGENRE_BY_GENRE);
-        declareParameter(new SqlParameter("id_genre", Types.INTEGER));
+        super(dataSource, QUERY);
+        super.declareParameter(new SqlParameter("id_genre", Types.INTEGER));
         compile();
     }
     
-    protected AlbumGenre mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-            AlbumGenre albumGenre = repository.getEntity(resultSet);
+    @Override
+    protected AlbumGenreEntity mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            AlbumGenreEntity albumGenre = repository.getEntity(resultSet);
             
-            Album album = new Album();
+            AlbumEntity album = new AlbumEntity();
             album.setId(albumGenre.getId_album());
             album.setName(resultSet.getString("name"));
             album.setRating(resultSet.getInt("rating"));
             album.setId_artist(resultSet.getInt("id_artist"));
 
-            Artist artist = new Artist();
+            ArtistEntity artist = new ArtistEntity();
             artist.setId(album.getId_artist());
             artist.setName(resultSet.getString("artist_name"));
 
@@ -59,7 +60,7 @@ public class SelectAlbumGenreByGenre extends MappingSqlQuery<AlbumGenre> {
             return albumGenre;
     }
     
-    public void setRepository(BaseRepository<AlbumGenre> repository) {
+    public void setRepository(BaseRepository<AlbumGenreEntity> repository) {
         this.repository = repository;
     }
     

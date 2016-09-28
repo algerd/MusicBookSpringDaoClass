@@ -15,8 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
-import com.algerd.musicbookspringmaven.entity.Artist;
-import com.algerd.musicbookspringmaven.entity.ArtistGenre;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
+import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ARTIST;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ARTIST;
@@ -24,20 +24,20 @@ import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.E
 
 public class ArtistGenreTableController extends BaseIncludeController<GenrePaneController> {
 
-    private ArtistGenre selectedItem;
+    private ArtistGenreEntity selectedItem;
     
     @FXML
     private AnchorPane artistGenreTable;
     @FXML
     private Label titleLabel;
     @FXML
-    private TableView<ArtistGenre> artistTableView;
+    private TableView<ArtistGenreEntity> artistTableView;
     @FXML
-    private TableColumn<ArtistGenre, Integer> rankColumn;
+    private TableColumn<ArtistGenreEntity, Integer> rankColumn;
     @FXML
-    private TableColumn<ArtistGenre, String> artistColumn;
+    private TableColumn<ArtistGenreEntity, String> artistColumn;
     @FXML
-    private TableColumn<ArtistGenre, Integer> ratingColumn;
+    private TableColumn<ArtistGenreEntity, Integer> ratingColumn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,7 +73,7 @@ public class ArtistGenreTableController extends BaseIncludeController<GenrePaneC
     private void setTableValue() {        
         clearSelectionTable();
         artistTableView.getItems().clear();
-        List<ArtistGenre> artistGenres = repositoryService.getArtistGenreRepository().selectJoinByGenre(paneController.getGenre());  
+        List<ArtistGenreEntity> artistGenres = repositoryService.getArtistGenreRepository().selectArtistGenreByGenre(paneController.getGenre());  
         artistTableView.setItems(FXCollections.observableArrayList(artistGenres));      
         sort();
         Helper.setHeightTable(artistTableView, 10);       
@@ -92,7 +92,7 @@ public class ArtistGenreTableController extends BaseIncludeController<GenrePaneC
     
     private void sort() {
         clearSelectionTable();
-        artistTableView.getItems().sort(Comparator.comparingInt((ArtistGenre artistGenre) -> artistGenre.getArtist().getRating()).reversed());
+        artistTableView.getItems().sort(Comparator.comparingInt((ArtistGenreEntity artistGenre) -> artistGenre.getArtist().getRating()).reversed());
     }
     
     public void clearSelectionTable() {
@@ -115,16 +115,16 @@ public class ArtistGenreTableController extends BaseIncludeController<GenrePaneC
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Artist artist = repositoryService.getArtistRepository().selectById(selectedItem.getArtist().getId());
+                ArtistEntity artist = repositoryService.getArtistRepository().selectById(selectedItem.getArtist().getId());
                 //RequestPage.ARTIST_PANE.load(artist);
                 requestPageService.artistPane(artist);
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            contextMenuService.add(ADD_ARTIST, new Artist());
+            contextMenuService.add(ADD_ARTIST, new ArtistEntity());
             // запретить удаление и редактирование записи с id = 1 (Unknown album)
             if (selectedItem != null && selectedItem.getId() != 1) {
-                Artist artist = repositoryService.getArtistRepository().selectById(selectedItem.getArtist().getId());
+                ArtistEntity artist = repositoryService.getArtistRepository().selectById(selectedItem.getArtist().getId());
                 contextMenuService.add(EDIT_ARTIST, artist);
                 contextMenuService.add(DELETE_ARTIST, artist);                       
             }

@@ -1,5 +1,5 @@
 
-package com.algerd.musicbookspringmaven.entity;
+package com.algerd.musicbookspringmaven.repository.ArtistReference;
 
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.dbDriver.annotation.Column;
@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 @Table("artist_reference")
-public class ArtistReference extends Entity {
+public class ArtistReferenceEntity extends Entity {
     @Column("id")
     private int id = 0;
     @Column("id_artist")
@@ -18,7 +18,7 @@ public class ArtistReference extends Entity {
     @Column("reference")
     private final StringProperty reference = new SimpleStringProperty("");
    
-    public ArtistReference() {
+    public ArtistReferenceEntity() {
         super();
     }
     
@@ -28,8 +28,8 @@ public class ArtistReference extends Entity {
 			return true;
 		if (obj == null)
 			return false;
-		if (obj instanceof ArtistReference) {
-            Entity entity = (ArtistReference) obj;
+		if (obj instanceof ArtistReferenceEntity) {
+            Entity entity = (ArtistReferenceEntity) obj;
             if (entity.getId() == getId()) {
                 return true;
             }

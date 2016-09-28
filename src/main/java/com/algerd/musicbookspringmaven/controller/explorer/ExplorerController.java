@@ -14,8 +14,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.dbDriver.Entity;
 import com.algerd.musicbookspringmaven.entity.Song;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.*;
@@ -58,9 +58,9 @@ public class ExplorerController extends BaseAwareController implements Initializ
     }
        
     private void fillTreeItems() {      
-        List<Artist> artists = repositoryService.getArtistRepository().selectAll();        
-        artists.sort(Comparator.comparing(Artist::getName));       
-        for (Artist artist : artists) {
+        List<ArtistEntity> artists = repositoryService.getArtistRepository().selectAll();        
+        artists.sort(Comparator.comparing(ArtistEntity::getName));       
+        for (ArtistEntity artist : artists) {
             TreeItem artistItem = new ArtistTreeItem(artist, repositoryService);
             artistTree.getRoot().getChildren().add(artistItem); 
         }
@@ -83,10 +83,10 @@ public class ExplorerController extends BaseAwareController implements Initializ
             ArtistTreeItem selectedItem = (ArtistTreeItem) artistTree.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
                 Entity entity = (Entity) selectedItem.getValue();
-                if (entity instanceof Artist) {
+                if (entity instanceof ArtistEntity) {
                     requestPageService.artistPane(entity);
                 }
-                else if(entity instanceof Album) {
+                else if(entity instanceof AlbumEntity) {
                     requestPageService.albumPane(entity);
                 }
                 else if (entity instanceof Song) {
@@ -107,22 +107,22 @@ public class ExplorerController extends BaseAwareController implements Initializ
         if (selectedItem != null) { 
             Entity entity = (Entity) selectedItem.getValue();
 
-            if (entity instanceof Artist) {
-                Artist artist = (Artist) entity;
-                contextMenuService.add(ADD_ARTIST, new Artist());
+            if (entity instanceof ArtistEntity) {
+                ArtistEntity artist = (ArtistEntity) entity;
+                contextMenuService.add(ADD_ARTIST, new ArtistEntity());
                 // запретить удаление и редактирование записи с id = 1 (Unknown artist)
                 if (artist.getId() != 1) {
                     contextMenuService.add(EDIT_ARTIST, artist);
                     contextMenuService.add(DELETE_ARTIST, artist);
                     contextMenuService.add(SEPARATOR);
                 }
-                Album newAlbum = new Album();
+                AlbumEntity newAlbum = new AlbumEntity();
                 newAlbum.setId_artist(artist.getId());  
                 contextMenuService.add(ADD_ALBUM, newAlbum);           
             }
-            else if(entity instanceof Album) {   
-                Album album = (Album) entity;
-                Album newAlbum = new Album();
+            else if(entity instanceof AlbumEntity) {   
+                AlbumEntity album = (AlbumEntity) entity;
+                AlbumEntity newAlbum = new AlbumEntity();
                 newAlbum.setId_artist(album.getId_artist());
                 contextMenuService.add(ADD_ALBUM, newAlbum);
                 // запретить удаление и редактирование записи с id = 1 (Unknown album)
@@ -147,7 +147,7 @@ public class ExplorerController extends BaseAwareController implements Initializ
         //Если не выбран элемент в дереве - предоставить меню: add artist
         else {
             artistTree.getSelectionModel().clearSelection();
-            contextMenuService.add(ADD_ARTIST, new Artist());
+            contextMenuService.add(ADD_ARTIST, new ArtistEntity());
         }
         contextMenuService.show(explorer, mouseEvent); 
     } 

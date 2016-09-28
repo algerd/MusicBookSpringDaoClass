@@ -1,11 +1,11 @@
 
 package com.algerd.musicbookspringmaven.service;
 
-import com.algerd.musicbookspringmaven.repository.albumgenre.AlbumGenreRepository;
-import com.algerd.musicbookspringmaven.repository.AlbumRepository;
-import com.algerd.musicbookspringmaven.repository.ArtistGenreRepository;
-import com.algerd.musicbookspringmaven.repository.ArtistReferenceRepository;
-import com.algerd.musicbookspringmaven.repository.ArtistRepository;
+import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreRepository;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumRepository;
+import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreRepository;
+import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceRepository;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistRepository;
 import com.algerd.musicbookspringmaven.repository.GenreRepository;
 import com.algerd.musicbookspringmaven.repository.InstrumentRepository;
 import com.algerd.musicbookspringmaven.repository.MusicianAlbumRepository;

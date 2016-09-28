@@ -1,9 +1,9 @@
 
 package com.algerd.musicbookspringmaven.service.impl;
 
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
-import com.algerd.musicbookspringmaven.entity.ArtistReference;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
+import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceEntity;
 import com.algerd.musicbookspringmaven.entity.Genre;
 import com.algerd.musicbookspringmaven.entity.Instrument;
 import com.algerd.musicbookspringmaven.entity.Musician;
@@ -31,7 +31,7 @@ public class DeleteAlertServiceImpl implements DeleteAlertService {
     }
     
     @Override
-    public void show(Album album) {
+    public void show(AlbumEntity album) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setContentText("Do you want to remove the album " + album.getName() + " ?");
@@ -42,7 +42,7 @@ public class DeleteAlertServiceImpl implements DeleteAlertService {
     }
     
     @Override
-    public void show(Artist artist) {
+    public void show(ArtistEntity artist) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setContentText("Do you want to remove the artist " + artist.getName() + " ?");
@@ -77,7 +77,7 @@ public class DeleteAlertServiceImpl implements DeleteAlertService {
     @Override
     public void show(MusicianAlbum musicianAlbum) {
         Musician musician = repositoryService.getMusicianRepository().selectById(musicianAlbum.getId_musician());
-        Album album = repositoryService.getAlbumRepository().selectById(musicianAlbum.getId_album());
+        AlbumEntity album = repositoryService.getAlbumRepository().selectById(musicianAlbum.getId_album());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");        
         alert.setContentText("Do you want to remove the musician " + musician.getName() + " from " + album.getName() + " ?");
@@ -125,7 +125,7 @@ public class DeleteAlertServiceImpl implements DeleteAlertService {
     @Override
     public void show(MusicianGroup musicianGroup) {
         Musician musician = repositoryService.getMusicianRepository().selectById(musicianGroup.getId_musician());
-        Artist artist = repositoryService.getArtistRepository().selectById(musicianGroup.getId_artist());
+        ArtistEntity artist = repositoryService.getArtistRepository().selectById(musicianGroup.getId_artist());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");        
         alert.setContentText("Do you want to remove the musician " + musician.getName() + " from " + artist.getName() + " ?");
@@ -136,7 +136,7 @@ public class DeleteAlertServiceImpl implements DeleteAlertService {
     }
     
     @Override
-    public void show(ArtistReference artistReference) {
+    public void show(ArtistReferenceEntity artistReference) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setContentText("Do you want to remove the artist reference: " + artistReference.getName() + " ?");

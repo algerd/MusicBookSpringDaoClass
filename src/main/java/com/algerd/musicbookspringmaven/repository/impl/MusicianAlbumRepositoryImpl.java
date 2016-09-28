@@ -2,8 +2,8 @@
 package com.algerd.musicbookspringmaven.repository.impl;
 
 import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.entity.Musician;
 import com.algerd.musicbookspringmaven.entity.MusicianAlbum;
 import com.algerd.musicbookspringmaven.repository.MusicianAlbumRepository;
@@ -34,17 +34,16 @@ public class MusicianAlbumRepositoryImpl extends CrudRepositoryImpl<MusicianAlbu
             prepareQuery, 
             new int[] {Types.INTEGER}    
         );      
-        return jdbcTemplate.query(
-            pscf.newPreparedStatementCreator(new Object[] {musician.getId()}), 
+        return jdbcTemplate.query(pscf.newPreparedStatementCreator(new Object[] {musician.getId()}), 
             (ResultSet resultSet, int rowNum) -> {
                 MusicianAlbum musicianAlbum = getEntity(resultSet);
             
-                Album album = new Album();
+                AlbumEntity album = new AlbumEntity();
                 album.setId(musicianAlbum.getId_album());
                 album.setName(resultSet.getString("album_name"));
                 album.setRating(resultSet.getInt("rating"));
 
-                Artist artist = new Artist();
+                ArtistEntity artist = new ArtistEntity();
                 artist.setId(resultSet.getInt("id_artist"));
                 artist.setName(resultSet.getString("artist_name"));
 
@@ -56,7 +55,7 @@ public class MusicianAlbumRepositoryImpl extends CrudRepositoryImpl<MusicianAlbu
     }
     
     @Override
-    public List<MusicianAlbum> selectJoinByAlbum(Album album) {
+    public List<MusicianAlbum> selectJoinByAlbum(AlbumEntity album) {
         String prepareQuery = 
             "select "
                 + "musician_album.id, "
@@ -87,7 +86,7 @@ public class MusicianAlbumRepositoryImpl extends CrudRepositoryImpl<MusicianAlbu
     }
     
     @Override
-    public boolean containsMusicianAlbum(Musician musician, Album album) {
+    public boolean containsMusicianAlbum(Musician musician, AlbumEntity album) {
         String prepareQuery = "select count(id) from " + getTableName() + " where id_musician = ? and id_album = ?";
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
             prepareQuery, 

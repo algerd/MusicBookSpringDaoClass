@@ -2,8 +2,8 @@
 package com.algerd.musicbookspringmaven.repository.impl;
 
 import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
-import com.algerd.musicbookspringmaven.entity.Album;
-import com.algerd.musicbookspringmaven.entity.Artist;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
+import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.entity.Song;
 import com.algerd.musicbookspringmaven.repository.SongRepository;
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 public class SongRepositoryImpl extends CrudRepositoryImpl<Song> implements SongRepository {
 
     @Override
-    public boolean containsAlbum(Album album) {
+    public boolean containsAlbum(AlbumEntity album) {
         String prepareQuery = "select count(id) from " + getTableName() + " where id_album = ?";
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
             prepareQuery, 
@@ -27,7 +27,7 @@ public class SongRepositoryImpl extends CrudRepositoryImpl<Song> implements Song
     }  
     
     @Override
-    public List<Song> selectByAlbum(Album album) {
+    public List<Song> selectByAlbum(AlbumEntity album) {
         String prepareQuery = "select * from song where id_album = ?";
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
             prepareQuery, 
@@ -55,8 +55,7 @@ public class SongRepositoryImpl extends CrudRepositoryImpl<Song> implements Song
                 + "left join album on song.id_album = album.id "
                 + "left join artist on album.id_artist = artist.id ";
              
-        return jdbcTemplate.query(
-            query, 
+        return jdbcTemplate.query(query, 
             (ResultSet resultSet, int rowNum) -> {
                 Song song = new Song();
                 song.setId(resultSet.getInt("id"));
@@ -64,13 +63,13 @@ public class SongRepositoryImpl extends CrudRepositoryImpl<Song> implements Song
                 song.setName(resultSet.getString("name"));
                 song.setRating(resultSet.getInt("rating"));
 
-                Album album = new Album();
+                AlbumEntity album = new AlbumEntity();
                 album.setId(song.getId_album());
                 album.setName(resultSet.getString("album_name"));
                 album.setYear(resultSet.getInt("year"));
                 album.setId_artist(resultSet.getInt("id_artist"));
 
-                Artist artist = new Artist();
+                ArtistEntity artist = new ArtistEntity();
                 artist.setId(album.getId_artist());
                 artist.setName(resultSet.getString("artist_name"));
 
@@ -82,7 +81,7 @@ public class SongRepositoryImpl extends CrudRepositoryImpl<Song> implements Song
     }
     
     @Override
-    public boolean containsSong(String name, Album album) {
+    public boolean containsSong(String name, AlbumEntity album) {
         String prepareQuery = "select count(id) from " + getTableName() + " where id_album = ? and name = ?";
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
             prepareQuery, 

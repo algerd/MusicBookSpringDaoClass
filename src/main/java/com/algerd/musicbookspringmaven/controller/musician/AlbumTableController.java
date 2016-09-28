@@ -15,7 +15,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Album;
+import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.entity.MusicianAlbum;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN_ALBUM;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN_ALBUM;
@@ -114,7 +114,7 @@ public class AlbumTableController extends BaseIncludeController<MusicianPaneCont
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Album album = repositoryService.getAlbumRepository().selectById(selectedItem.getAlbum().getId());
+                AlbumEntity album = repositoryService.getAlbumRepository().selectById(selectedItem.getAlbum().getId());
                 requestPageService.albumPane(album);
             }
         }
