@@ -166,7 +166,7 @@ public abstract class BaseRepositoryImpl<T extends Entity> implements BaseReposi
             }
         }
         if (update) {
-            arrTypes[size] = Types.INTEGER;  
+            arrTypes[size-1] = Types.INTEGER;  
         }
         return arrTypes;
     }
@@ -192,7 +192,7 @@ public abstract class BaseRepositoryImpl<T extends Entity> implements BaseReposi
             }    
         }
         if (update) {
-            values[size] = entity.getId(); 
+            values[size-1] = entity.getId(); 
         }
         return values;
     }
