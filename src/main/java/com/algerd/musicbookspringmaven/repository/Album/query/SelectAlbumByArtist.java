@@ -1,7 +1,7 @@
 
 package com.algerd.musicbookspringmaven.repository.Album.query;
 
-import com.algerd.musicbookspringmaven.dbDriver.BaseRepository;
+import com.algerd.musicbookspringmaven.repository.BaseRepository;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;

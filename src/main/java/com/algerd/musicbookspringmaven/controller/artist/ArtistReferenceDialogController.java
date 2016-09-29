@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import javafx.scene.layout.AnchorPane;
 

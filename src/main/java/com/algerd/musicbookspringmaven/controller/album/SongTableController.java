@@ -14,26 +14,26 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Song;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_SONG;
 
 public class SongTableController extends BaseIncludeController<AlbumPaneController> {
       
-    private Song selectedItem;
+    private SongEntity selectedItem;
     
     @FXML
-    private TableView<Song> songTableView;
+    private TableView<SongEntity> songTableView;
     @FXML
-    private TableColumn<Song, String> songNameColumn;
+    private TableColumn<SongEntity, String> songNameColumn;
     @FXML
-    private TableColumn<Song, Integer> songTrackColumn;
+    private TableColumn<SongEntity, Integer> songTrackColumn;
     @FXML
-    private TableColumn<Song, String> songTimeColumn;
+    private TableColumn<SongEntity, String> songTimeColumn;
     @FXML
-    private TableColumn<Song, Integer> songRatingColumn;
+    private TableColumn<SongEntity, Integer> songRatingColumn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {         
@@ -65,8 +65,8 @@ public class SongTableController extends BaseIncludeController<AlbumPaneControll
     }
     
     private void setTableValue() {
-        ObservableList<Song> songs = 
-            FXCollections.observableArrayList(repositoryService.getSongRepository().selectByAlbum(paneController.getAlbum()));
+        ObservableList<SongEntity> songs = 
+            FXCollections.observableArrayList(repositoryService.getSongRepository().selectSongByAlbum(paneController.getAlbum()));
         clearSelectionTable();
         songTableView.getItems().clear();
         songTableView.setItems(songs);
@@ -85,7 +85,7 @@ public class SongTableController extends BaseIncludeController<AlbumPaneControll
     } 
     
     private void addedSong(ObservableValue observable, Object oldVal, Object newVal) {
-        Song newEntity = ((WrapChangedEntity<Song>) newVal).getNew();
+        SongEntity newEntity = ((WrapChangedEntity<SongEntity>) newVal).getNew();
         if (newEntity.getId_album() == paneController.getAlbum().getId()) {
             songTableView.getItems().add(newEntity);
             sort();
@@ -93,7 +93,7 @@ public class SongTableController extends BaseIncludeController<AlbumPaneControll
     }
     
     private void deletedSong(ObservableValue observable, Object oldVal, Object newVal) {
-        Song newEntity = ((WrapChangedEntity<Song>) newVal).getNew();
+        SongEntity newEntity = ((WrapChangedEntity<SongEntity>) newVal).getNew();
         if (newEntity.getId_album() == paneController.getAlbum().getId()) {
             songTableView.getItems().add(newEntity);
             clearSelectionTable();
@@ -101,8 +101,8 @@ public class SongTableController extends BaseIncludeController<AlbumPaneControll
     }
     
     private void updatedSong(ObservableValue observable, Object oldVal, Object newVal) {
-        Song oldEntity = ((WrapChangedEntity<Song>) newVal).getOld();
-        Song newEntity = ((WrapChangedEntity<Song>) newVal).getNew(); 
+        SongEntity oldEntity = ((WrapChangedEntity<SongEntity>) newVal).getOld();
+        SongEntity newEntity = ((WrapChangedEntity<SongEntity>) newVal).getNew(); 
         if (oldEntity.getId_album() == paneController.getAlbum().getId()) {
             songTableView.getItems().removeAll(oldEntity);
         }
@@ -119,7 +119,7 @@ public class SongTableController extends BaseIncludeController<AlbumPaneControll
     
     private void sort() {
         clearSelectionTable();
-        songTableView.getItems().sort(Comparator.comparingInt(Song::getTrack));       
+        songTableView.getItems().sort(Comparator.comparingInt(SongEntity::getTrack));       
     }
     
     @FXML
@@ -137,7 +137,7 @@ public class SongTableController extends BaseIncludeController<AlbumPaneControll
             }
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-            Song song = new Song();
+            SongEntity song = new SongEntity();
             song.setId_album(paneController.getAlbum().getId());
             contextMenuService.add(ADD_SONG, song);                    
             if (selectedItem != null) {

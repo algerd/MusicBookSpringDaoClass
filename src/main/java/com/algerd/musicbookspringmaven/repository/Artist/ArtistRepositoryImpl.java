@@ -1,7 +1,7 @@
 
 package com.algerd.musicbookspringmaven.repository.Artist;
 
-import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.impl.CrudRepositoryImpl;
 
 public class ArtistRepositoryImpl extends CrudRepositoryImpl<ArtistEntity> implements ArtistRepository {   
      

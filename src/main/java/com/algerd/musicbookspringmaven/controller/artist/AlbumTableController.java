@@ -14,7 +14,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ALBUM;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ALBUM;

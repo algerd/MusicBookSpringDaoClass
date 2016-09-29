@@ -1,7 +1,7 @@
 
 package com.algerd.musicbookspringmaven.repository.AlbumGenre.query;
 
-import com.algerd.musicbookspringmaven.dbDriver.BaseRepository;
+import com.algerd.musicbookspringmaven.repository.BaseRepository;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;

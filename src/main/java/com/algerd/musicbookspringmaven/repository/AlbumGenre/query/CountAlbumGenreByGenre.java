@@ -26,6 +26,5 @@ public class CountAlbumGenreByGenre extends MappingSqlQuery<Integer> {
     @Override
     protected Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
         return rs.getInt(1);
-    }
-        
+    }       
 }

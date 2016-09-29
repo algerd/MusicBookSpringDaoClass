@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Song;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import static com.algerd.musicbookspringmaven.Params.DIR_IMAGES;
 
 public class ArtistTreeCell extends TreeCell<Entity> {
@@ -28,8 +28,8 @@ public class ArtistTreeCell extends TreeCell<Entity> {
                 textProperty().bind(((AlbumEntity) item).nameProperty());
                 setGraphic(getIcon("file.jpg"));
             }
-            else if (item instanceof Song) {
-                this.textProperty().bind(((Song) item).nameProperty());
+            else if (item instanceof SongEntity) {
+                this.textProperty().bind(((SongEntity) item).nameProperty());
                 //this.setGraphic(getIcon("file.jpg"));
             }
         }

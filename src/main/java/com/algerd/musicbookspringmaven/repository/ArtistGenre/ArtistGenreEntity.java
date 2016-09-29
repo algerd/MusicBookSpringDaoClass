@@ -2,10 +2,10 @@
 package com.algerd.musicbookspringmaven.repository.ArtistGenre;
 
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.dbDriver.annotation.Column;
-import com.algerd.musicbookspringmaven.dbDriver.annotation.Table;
-import com.algerd.musicbookspringmaven.entity.Genre;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.annotation.Column;
+import com.algerd.musicbookspringmaven.repository.annotation.Table;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 
 @Table("artist_genre")
 public class ArtistGenreEntity extends Entity {
@@ -16,7 +16,7 @@ public class ArtistGenreEntity extends Entity {
     @Column("id_artist")
     private int id_artist = 0;
     
-    private Genre genre;
+    private GenreEntity genre;
     private ArtistEntity artist;
     
     public ArtistGenreEntity() {
@@ -66,10 +66,10 @@ public class ArtistGenreEntity extends Entity {
         this.id_artist = id_artist;
     } 
 
-    public Genre getGenre() {
+    public GenreEntity getGenre() {
         return genre;
     }
-    public void setGenre(Genre genre) {
+    public void setGenre(GenreEntity genre) {
         this.genre = genre;
     }
 

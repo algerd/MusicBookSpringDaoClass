@@ -18,34 +18,34 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Song;
-import com.algerd.musicbookspringmaven.entity.SongGenre;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
+import com.algerd.musicbookspringmaven.repository.SongGenre.SongGenreEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_SONG;
 
 public class SongGenreTableController extends BaseIncludeController<GenrePaneController> {
        
-    private SongGenre selectedItem;
+    private SongGenreEntity selectedItem;
     
     @FXML
     private AnchorPane songGenreTable;
     @FXML
     private Label titleLabel;        
     @FXML
-    private TableView<SongGenre> songTableView;
+    private TableView<SongGenreEntity> songTableView;
     @FXML
-    private TableColumn<SongGenre, Integer> rankColumn;
+    private TableColumn<SongGenreEntity, Integer> rankColumn;
     @FXML
-    private TableColumn<SongGenre, String> songColumn;
+    private TableColumn<SongGenreEntity, String> songColumn;
     @FXML
-    private TableColumn<SongGenre, String> artistColumn;
+    private TableColumn<SongGenreEntity, String> artistColumn;
     @FXML
-    private TableColumn<SongGenre, String> albumColumn;
+    private TableColumn<SongGenreEntity, String> albumColumn;
     @FXML
-    private TableColumn<SongGenre, Integer> yearColumn;            
+    private TableColumn<SongGenreEntity, Integer> yearColumn;            
     @FXML
-    private TableColumn<SongGenre, Integer> ratingColumn;  
+    private TableColumn<SongGenreEntity, Integer> ratingColumn;  
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {  
@@ -88,7 +88,7 @@ public class SongGenreTableController extends BaseIncludeController<GenrePaneCon
     private void setTableValue() {       
         clearSelectionTable();
         songTableView.getItems().clear();
-        List<SongGenre> songs = repositoryService.getSongGenreRepository().selectJoinByGenre(paneController.getGenre());
+        List<SongGenreEntity> songs = repositoryService.getSongGenreRepository().selectSongGenreByGenre(paneController.getGenre());
         songTableView.setItems(FXCollections.observableArrayList(songs));      
         sort();       
         Helper.setHeightTable(songTableView, 10);  
@@ -106,7 +106,7 @@ public class SongGenreTableController extends BaseIncludeController<GenrePaneCon
     
     private void sort() {
         clearSelectionTable();
-        songTableView.getItems().sort(Comparator.comparingInt((SongGenre songGenre) -> songGenre.getSong().getRating()).reversed());
+        songTableView.getItems().sort(Comparator.comparingInt((SongGenreEntity songGenre) -> songGenre.getSong().getRating()).reversed());
     }
     
     public void clearSelectionTable() {
@@ -129,17 +129,17 @@ public class SongGenreTableController extends BaseIncludeController<GenrePaneCon
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Song song = repositoryService.getSongRepository().selectById(selectedItem.getSong().getId());
+                SongEntity song = repositoryService.getSongRepository().selectById(selectedItem.getSong().getId());
                 requestPageService.songPane(song);
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
             // id = 1 is "Unknown" albom of "Unknown" artist
-            Song newSong = new Song();
+            SongEntity newSong = new SongEntity();
             newSong.setId_album(1);          
             contextMenuService.add(ADD_SONG, newSong);                
             if (selectedItem != null) {
-                Song song = repositoryService.getSongRepository().selectById(selectedItem.getSong().getId());
+                SongEntity song = repositoryService.getSongRepository().selectById(selectedItem.getSong().getId());
                 contextMenuService.add(EDIT_SONG, song);
                 contextMenuService.add(DELETE_SONG, song);                       
             }

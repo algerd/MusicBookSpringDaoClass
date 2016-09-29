@@ -1,7 +1,7 @@
 
 package com.algerd.musicbookspringmaven.utils;
 
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import javafx.beans.binding.Bindings;

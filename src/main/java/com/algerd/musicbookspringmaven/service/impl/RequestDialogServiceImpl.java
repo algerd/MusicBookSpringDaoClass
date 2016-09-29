@@ -14,7 +14,7 @@ import com.algerd.musicbookspringmaven.controller.musician.MusicianGroupDialogCo
 import com.algerd.musicbookspringmaven.controller.musician.MusicianSongDialogController;
 import com.algerd.musicbookspringmaven.controller.song.SongDialogController;
 import com.algerd.musicbookspringmaven.spring.SpringFxmlLoader;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

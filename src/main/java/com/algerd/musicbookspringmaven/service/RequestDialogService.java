@@ -2,7 +2,7 @@
 package com.algerd.musicbookspringmaven.service;
 
 import com.algerd.musicbookspringmaven.controller.DialogController;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 
 public interface RequestDialogService {
     

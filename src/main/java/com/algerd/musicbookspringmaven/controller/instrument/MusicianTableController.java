@@ -15,7 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import com.algerd.musicbookspringmaven.entity.Musician;
+import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN;
@@ -23,20 +23,20 @@ import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.E
 
 public class MusicianTableController extends BaseIncludeController<InstrumentPaneController> {
   
-    private Musician selectedItem;
+    private MusicianEntity selectedItem;
     
     @FXML
     private AnchorPane musicianTable;
     @FXML
     private Label titleLabel;        
     @FXML
-    private TableView<Musician> musicianTableView;
+    private TableView<MusicianEntity> musicianTableView;
     @FXML
-    private TableColumn<Musician, Integer> rankColumn;
+    private TableColumn<MusicianEntity, Integer> rankColumn;
     @FXML
-    private TableColumn<Musician, String> musicianColumn;
+    private TableColumn<MusicianEntity, String> musicianColumn;
     @FXML
-    private TableColumn<Musician, Integer> ratingColumn;
+    private TableColumn<MusicianEntity, Integer> ratingColumn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,7 +57,7 @@ public class MusicianTableController extends BaseIncludeController<InstrumentPan
     private void setTableValue() {
         clearSelectionTable();
         musicianTableView.getItems().clear();
-        List<Musician> musicians = repositoryService.getMusicianRepository().selectMusuciansByInstrument(paneController.getInstrument());
+        List<MusicianEntity> musicians = repositoryService.getMusicianRepository().selectMusucianByInstrument(paneController.getInstrument());
         musicianTableView.setItems(FXCollections.observableArrayList(musicians));      
         sort();       
         Helper.setHeightTable(musicianTableView, 10);  
@@ -90,7 +90,7 @@ public class MusicianTableController extends BaseIncludeController<InstrumentPan
     
     private void sort() {
         clearSelectionTable();
-        musicianTableView.getItems().sort(Comparator.comparingInt(Musician ::getRating).reversed());
+        musicianTableView.getItems().sort(Comparator.comparingInt(MusicianEntity ::getRating).reversed());
     }
     
     private void changed(ObservableValue observable, Object oldVal, Object newVal) {
@@ -112,14 +112,14 @@ public class MusicianTableController extends BaseIncludeController<InstrumentPan
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) { 
-                Musician musician = repositoryService.getMusicianRepository().selectById(selectedItem.getId());
+                MusicianEntity musician = repositoryService.getMusicianRepository().selectById(selectedItem.getId());
                 requestPageService.musicianPane(musician);
             }
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            contextMenuService.add(ADD_MUSICIAN, new Musician());                    
+            contextMenuService.add(ADD_MUSICIAN, new MusicianEntity());                    
             if (selectedItem != null) {
-                Musician musician = repositoryService.getMusicianRepository().selectById(selectedItem.getId());
+                MusicianEntity musician = repositoryService.getMusicianRepository().selectById(selectedItem.getId());
                 contextMenuService.add(EDIT_MUSICIAN, musician);
                 contextMenuService.add(DELETE_MUSICIAN, musician);     
             }

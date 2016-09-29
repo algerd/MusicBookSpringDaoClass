@@ -1,10 +1,10 @@
 
 package com.algerd.musicbookspringmaven.repository.AlbumGenre;
 
-import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.impl.CrudRepositoryImpl;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.query.CountAlbumGenreByGenre;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.query.DeleteAlbumGenreByAlbum;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.query.SelectAlbumGenreByAlbum;
@@ -25,7 +25,7 @@ public class AlbumGenreRepositoryImpl extends CrudRepositoryImpl<AlbumGenreEntit
     }
     
     @Override
-    public List<AlbumGenreEntity> selectAlbumGenreByGenre(Genre genre) {
+    public List<AlbumGenreEntity> selectAlbumGenreByGenre(GenreEntity genre) {
         return selectAlbumGenreByGenre.execute(genre.getId());
     }    
   
@@ -36,7 +36,7 @@ public class AlbumGenreRepositoryImpl extends CrudRepositoryImpl<AlbumGenreEntit
     }
        
     @Override
-    public int countAlbumGenreByGenre(Genre genre) {
+    public int countAlbumGenreByGenre(GenreEntity genre) {
         return countAlbumGenreByGenre.findObject(genre.getId());       
     }
     

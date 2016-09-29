@@ -23,8 +23,8 @@ import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 
 public class AlbumPaneController extends BasePaneController {

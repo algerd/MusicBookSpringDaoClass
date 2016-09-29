@@ -1,7 +1,7 @@
 
 package com.algerd.musicbookspringmaven.controller;
 
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 

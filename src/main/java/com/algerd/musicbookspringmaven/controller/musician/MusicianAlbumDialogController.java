@@ -8,20 +8,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Musician;
-import com.algerd.musicbookspringmaven.entity.MusicianAlbum;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianAlbum.MusicianAlbumEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import javafx.scene.layout.AnchorPane;
 
 public class MusicianAlbumDialogController extends BaseDialogController {
    
-    private MusicianAlbum musicianAlbum;    
+    private MusicianAlbumEntity musicianAlbum;    
     
     @FXML
     private AnchorPane view;
     @FXML
-    private ChoiceBox<Musician> musicianChoiceBox;
+    private ChoiceBox<MusicianEntity> musicianChoiceBox;
     @FXML
     private ChoiceBox<ArtistEntity> artistChoiceBox;
     @FXML
@@ -58,9 +58,9 @@ public class MusicianAlbumDialogController extends BaseDialogController {
     @FXML
     private void handleOkButton() {
         if (isInputValid()) {
-            Musician musician = musicianChoiceBox.getValue();
+            MusicianEntity musician = musicianChoiceBox.getValue();
             AlbumEntity album = albumChoiceBox.getValue();
-            if (!repositoryService.getMusicianAlbumRepository().containsMusicianAlbum(musician, album)) {
+            if (!repositoryService.getMusicianAlbumRepository().containsMusicianAlbumByMusicianAndAlbum(musician, album)) {
                 musicianAlbum.setId_musician(musician.getId());
                 musicianAlbum.setId_album(album.getId());
                 repositoryService.getMusicianAlbumRepository().save(musicianAlbum);               
@@ -91,7 +91,7 @@ public class MusicianAlbumDialogController extends BaseDialogController {
        
     @Override
     public void setEntity(Entity entity) {
-        musicianAlbum = (MusicianAlbum) entity;
+        musicianAlbum = (MusicianAlbumEntity) entity;
         super.setEntity(entity);
     }
     

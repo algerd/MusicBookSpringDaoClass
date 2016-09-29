@@ -1,7 +1,7 @@
 
 package com.algerd.musicbookspringmaven.repository.Album;
 
-import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.impl.CrudRepositoryImpl;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.Album.query.CountAlbumByArtist;
 import com.algerd.musicbookspringmaven.repository.Album.query.CountAlbumByArtistAndAlbumName;

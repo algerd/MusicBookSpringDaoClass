@@ -21,24 +21,24 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import com.algerd.musicbookspringmaven.entity.Musician;
+import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.entity.Instrument;
-import com.algerd.musicbookspringmaven.entity.MusicianGenre;
-import com.algerd.musicbookspringmaven.entity.MusicianInstrument;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.Instrument.InstrumentEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianInstrument.MusicianInstrumentEntity;
 
 public class MusiciansPaneController extends BasePaneController {
 
-    private Musician selectedItem;
-    private List<Musician> musicians;
+    private MusicianEntity selectedItem;
+    private List<MusicianEntity> musicians;
     // filter properties   
     private String searchString = "";  
-    private Genre genre;
-    private Instrument instrument;
+    private GenreEntity genre;
+    private InstrumentEntity instrument;
     private final IntegerProperty minRating = new SimpleIntegerProperty();
     private final IntegerProperty maxRating = new SimpleIntegerProperty();
     
@@ -47,28 +47,28 @@ public class MusiciansPaneController extends BasePaneController {
     @FXML
     private Spinner<Integer> maxRatingSpinner;
     @FXML
-    private ChoiceBox<Genre> genreChoiceBox;
+    private ChoiceBox<GenreEntity> genreChoiceBox;
     @FXML
-    private ChoiceBox<Instrument> instrumentChoiceBox;        
+    private ChoiceBox<InstrumentEntity> instrumentChoiceBox;        
     @FXML
     private TextField searchField;
     @FXML
     private Label resetSearchLabel;   
     /* ************ musiciansTable *************** */   
     @FXML
-    private TableView<Musician> musiciansTable;
+    private TableView<MusicianEntity> musiciansTable;
     @FXML
-    private TableColumn<Musician, Integer> rankColumn;  
+    private TableColumn<MusicianEntity, Integer> rankColumn;  
     @FXML
-    private TableColumn<Musician, String> nameColumn;
+    private TableColumn<MusicianEntity, String> nameColumn;
     @FXML
-    private TableColumn<Musician, String> dobColumn;
+    private TableColumn<MusicianEntity, String> dobColumn;
     @FXML
-    private TableColumn<Musician, String> dodColumn;
+    private TableColumn<MusicianEntity, String> dodColumn;
     @FXML
-    private TableColumn<Musician, String> countryColumn;  
+    private TableColumn<MusicianEntity, String> countryColumn;  
     @FXML
-    private TableColumn<Musician, Integer> ratingColumn;
+    private TableColumn<MusicianEntity, Integer> ratingColumn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -157,26 +157,26 @@ public class MusiciansPaneController extends BasePaneController {
     
     private void initGenreChoiceBox() {
         Helper.initEntityChoiceBox(genreChoiceBox);
-        genre = new Genre();
+        genre = new GenreEntity();
         genre.setId(-1);
         genre.setName("All genres");
         genreChoiceBox.getItems().clear();
         genreChoiceBox.getItems().add(genre);
-        List<Genre> genres = repositoryService.getGenreRepository().selectAll();
-        genres.sort(Comparator.comparing(Genre::getName));
+        List<GenreEntity> genres = repositoryService.getGenreRepository().selectAll();
+        genres.sort(Comparator.comparing(GenreEntity::getName));
         genreChoiceBox.getItems().addAll(genres);
         genreChoiceBox.getSelectionModel().selectFirst();
     }
     
     private void initInstrumentChoiceBox() {
         Helper.initEntityChoiceBox(instrumentChoiceBox);
-        instrument = new Instrument();
+        instrument = new InstrumentEntity();
         instrument.setId(-1);
         instrument.setName("All instruments");
         instrumentChoiceBox.getItems().clear();
         instrumentChoiceBox.getItems().add(instrument);
-        List<Instrument> instruments = repositoryService.getInstrumentRepository().selectAll();
-        instruments.sort(Comparator.comparing(Instrument::getName));
+        List<InstrumentEntity> instruments = repositoryService.getInstrumentRepository().selectAll();
+        instruments.sort(Comparator.comparing(InstrumentEntity::getName));
         instrumentChoiceBox.getItems().addAll(instruments);
         instrumentChoiceBox.getSelectionModel().selectFirst();
     }
@@ -198,7 +198,7 @@ public class MusiciansPaneController extends BasePaneController {
     }
     
     private void sort() {
-        musiciansTable.getItems().sort(Comparator.comparingInt(Musician::getRating).reversed());
+        musiciansTable.getItems().sort(Comparator.comparingInt(MusicianEntity::getRating).reversed());
     }
     
     @FXML
@@ -216,15 +216,15 @@ public class MusiciansPaneController extends BasePaneController {
     }
     
     private void filter() {
-        ObservableList<Musician> filteredList = FXCollections.observableArrayList();
+        ObservableList<MusicianEntity> filteredList = FXCollections.observableArrayList();
         int lengthSearch = searchString.length();        
         
-        for (Musician musician : musicians) {
+        for (MusicianEntity musician : musicians) {
             //фильтр по жанру
             boolean isGenre = false;
             if (genre.getId() != -1) {
-                List<MusicianGenre> musicianGenres = repositoryService.getMusicianGenreRepository().selectJoinByMusician(musician);
-                for (MusicianGenre musicianGenre : musicianGenres) {
+                List<MusicianGenreEntity> musicianGenres = repositoryService.getMusicianGenreRepository().selectMusicianGenreByMusician(musician);
+                for (MusicianGenreEntity musicianGenre : musicianGenres) {
                     if (musicianGenre.getGenre().equals(genre)) {
                         isGenre = true;
                         break;
@@ -236,8 +236,8 @@ public class MusiciansPaneController extends BasePaneController {
             //фильтр по инструменту 
             boolean isInstrument = false;
             if (instrument.getId() != -1) {
-                List<MusicianInstrument> musicianInstruments = repositoryService.getMusicianInstrumentRepository().selectJoinByMusician(musician);
-                for (MusicianInstrument musicianInstrument : musicianInstruments) {
+                List<MusicianInstrumentEntity> musicianInstruments = repositoryService.getMusicianInstrumentRepository().selectMusicianInstrumentByMusician(musician);
+                for (MusicianInstrumentEntity musicianInstrument : musicianInstruments) {
                     if (musicianInstrument.getInstrument().equals(instrument)) {
                         isInstrument = true;
                         break;
@@ -289,7 +289,7 @@ public class MusiciansPaneController extends BasePaneController {
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            contextMenuService.add(ADD_MUSICIAN, new Musician());
+            contextMenuService.add(ADD_MUSICIAN, new MusicianEntity());
             if (selectedItem != null  && selectedItem.getId() != 1) {
                 contextMenuService.add(EDIT_MUSICIAN, selectedItem);
                 contextMenuService.add(DELETE_MUSICIAN, selectedItem);                       

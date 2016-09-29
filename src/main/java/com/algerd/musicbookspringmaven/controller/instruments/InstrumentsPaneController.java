@@ -19,17 +19,17 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Instrument;
-import com.algerd.musicbookspringmaven.entity.MusicianInstrument;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Instrument.InstrumentEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianInstrument.MusicianInstrumentEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_INSTRUMENT;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_INSTRUMENT;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_INSTRUMENT;
 
 public class InstrumentsPaneController extends BasePaneController {
    
-    private Instrument selectedItem;
-    private List<Instrument> instruments;
+    private InstrumentEntity selectedItem;
+    private List<InstrumentEntity> instruments;
     private String searchString = "";  
     
     @FXML
@@ -38,13 +38,13 @@ public class InstrumentsPaneController extends BasePaneController {
     private Label resetSearchLabel; 
     //table
     @FXML
-    private TableView<Instrument> instrumentsTable;
+    private TableView<InstrumentEntity> instrumentsTable;
     @FXML
-    private TableColumn<Instrument, String> instrumentColumn;
+    private TableColumn<InstrumentEntity, String> instrumentColumn;
     @FXML
-    private TableColumn<Instrument, Instrument> numberOfMusiciansColumn;
+    private TableColumn<InstrumentEntity, InstrumentEntity> numberOfMusiciansColumn;
     @FXML
-    private TableColumn<Instrument, Instrument> averageRatingColumn;
+    private TableColumn<InstrumentEntity, InstrumentEntity> averageRatingColumn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
@@ -65,13 +65,13 @@ public class InstrumentsPaneController extends BasePaneController {
         instrumentColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());       
         numberOfMusiciansColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         numberOfMusiciansColumn.setCellFactory(col -> {
-            TableCell<Instrument, Instrument> cell = new TableCell<Instrument, Instrument>() {
+            TableCell<InstrumentEntity, InstrumentEntity> cell = new TableCell<InstrumentEntity, InstrumentEntity>() {
                 @Override
-                public void updateItem(Instrument item, boolean empty) {
+                public void updateItem(InstrumentEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        this.setText("" + repositoryService.getMusicianInstrumentRepository().countMusiciansByInstrument(item));                   
+                        this.setText("" + repositoryService.getMusicianInstrumentRepository().countMusicianInstrumentByInstrument(item));                   
                     }
                 }
             };
@@ -79,15 +79,15 @@ public class InstrumentsPaneController extends BasePaneController {
         });
         averageRatingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         averageRatingColumn.setCellFactory(col -> {
-            TableCell<Instrument, Instrument> cell = new TableCell<Instrument, Instrument>() {
+            TableCell<InstrumentEntity, InstrumentEntity> cell = new TableCell<InstrumentEntity, InstrumentEntity>() {
                 @Override
-                public void updateItem(Instrument item, boolean empty) {
+                public void updateItem(InstrumentEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        List<MusicianInstrument> musicianInstruments = repositoryService.getMusicianInstrumentRepository().selectJoinByInstrument(item);
+                        List<MusicianInstrumentEntity> musicianInstruments = repositoryService.getMusicianInstrumentRepository().selectMusicianInstrumentByInstrument(item);
                         int averageRating = 0;
-                        for (MusicianInstrument musicianInstrument : musicianInstruments) {
+                        for (MusicianInstrumentEntity musicianInstrument : musicianInstruments) {
                             averageRating += musicianInstrument.getMusician().getRating();
                         }
                         int countMusicians = musicianInstruments.size();
@@ -144,10 +144,10 @@ public class InstrumentsPaneController extends BasePaneController {
     }
     
     private void filter() {
-        ObservableList<Instrument> filteredList = FXCollections.observableArrayList();
+        ObservableList<InstrumentEntity> filteredList = FXCollections.observableArrayList();
         int lengthSearch = searchString.length();
         
-        for (Instrument instrument : instruments) {
+        for (InstrumentEntity instrument : instruments) {
             if ((searchString.equals("") || instrument.getName().regionMatches(true, 0, searchString, 0, lengthSearch))) {                                      
                 filteredList.add(instrument);                
             }
@@ -158,7 +158,7 @@ public class InstrumentsPaneController extends BasePaneController {
     }
     
     private void sort() {
-        instrumentsTable.getItems().sort(Comparator.comparing(Instrument::getName));
+        instrumentsTable.getItems().sort(Comparator.comparing(InstrumentEntity::getName));
     }
     
     private void clearSelectionTable() {
@@ -183,14 +183,14 @@ public class InstrumentsPaneController extends BasePaneController {
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Instrument instrument = repositoryService.getInstrumentRepository().selectById(selectedItem.getId());
+                InstrumentEntity instrument = repositoryService.getInstrumentRepository().selectById(selectedItem.getId());
                 requestPageService.instrumentPane(instrument);
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            contextMenuService.add(ADD_INSTRUMENT, new Instrument());
+            contextMenuService.add(ADD_INSTRUMENT, new InstrumentEntity());
             if (selectedItem != null && selectedItem.getId() > 1) {
-                Instrument instrument = repositoryService.getInstrumentRepository().selectById(selectedItem.getId());
+                InstrumentEntity instrument = repositoryService.getInstrumentRepository().selectById(selectedItem.getId());
                 contextMenuService.add(EDIT_INSTRUMENT, instrument);
                 contextMenuService.add(DELETE_INSTRUMENT, instrument);                       
             }

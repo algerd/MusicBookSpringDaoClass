@@ -3,7 +3,7 @@ package com.algerd.musicbookspringmaven.service.impl;
 
 import com.algerd.musicbookspringmaven.service.RequestPageService;
 import com.algerd.musicbookspringmaven.controller.main.MainController;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.algerd.musicbookspringmaven.controller.PaneController;

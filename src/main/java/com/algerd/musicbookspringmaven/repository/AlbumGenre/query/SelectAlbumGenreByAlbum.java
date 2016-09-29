@@ -1,9 +1,9 @@
 
 package com.algerd.musicbookspringmaven.repository.AlbumGenre.query;
 
-import com.algerd.musicbookspringmaven.dbDriver.BaseRepository;
+import com.algerd.musicbookspringmaven.repository.BaseRepository;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
-import com.algerd.musicbookspringmaven.entity.Genre;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -39,7 +39,7 @@ public class SelectAlbumGenreByAlbum extends MappingSqlQuery<AlbumGenreEntity> {
     @Override
     protected AlbumGenreEntity mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         AlbumGenreEntity albumGenre = repository.getEntity(resultSet);
-        Genre genre = new Genre();
+        GenreEntity genre = new GenreEntity();
         genre.setId(albumGenre.getId_genre());
         genre.setName(resultSet.getString("name"));
         albumGenre.setGenre(genre);

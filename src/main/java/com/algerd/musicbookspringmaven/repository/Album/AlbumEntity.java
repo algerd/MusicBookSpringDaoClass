@@ -1,9 +1,9 @@
 
 package com.algerd.musicbookspringmaven.repository.Album;
 
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.dbDriver.annotation.Column;
-import com.algerd.musicbookspringmaven.dbDriver.annotation.Table;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.annotation.Column;
+import com.algerd.musicbookspringmaven.repository.annotation.Table;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

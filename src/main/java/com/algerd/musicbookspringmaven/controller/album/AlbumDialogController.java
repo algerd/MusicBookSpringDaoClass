@@ -23,8 +23,8 @@ import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.controller.helper.choiceCheckBox.ChoiceCheckBoxController;
 
@@ -61,7 +61,7 @@ public class AlbumDialogController extends BaseDialogController {
     @FXML   
     private AnchorPane includedChoiceCheckBox;
     @FXML
-    private ChoiceCheckBoxController<Genre> includedChoiceCheckBoxController;    
+    private ChoiceCheckBoxController<GenreEntity> includedChoiceCheckBoxController;    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {      
@@ -82,13 +82,13 @@ public class AlbumDialogController extends BaseDialogController {
     }
     
     private void initGenreChoiceCheckBox() {
-        List<Genre> artistGenres = new ArrayList<>();
+        List<GenreEntity> artistGenres = new ArrayList<>();
         if (edit) {        
             repositoryService.getAlbumGenreRepository().selectAlbumGenreByAlbum(album).stream().forEach(artistGenre -> {
                 artistGenres.add(artistGenre.getGenre());
             });
         }
-        Map<Genre, ObservableValue<Boolean>> map = new HashMap<>();
+        Map<GenreEntity, ObservableValue<Boolean>> map = new HashMap<>();
         repositoryService.getGenreRepository().selectAll().stream().forEach(genre -> {                     
             map.put(genre, new SimpleBooleanProperty(artistGenres.contains(genre)));
         });
@@ -116,7 +116,7 @@ public class AlbumDialogController extends BaseDialogController {
                 repositoryService.getAlbumGenreRepository().deleteAlbumGenreByAlbum(album);
             } 
             // Извлечь жанры из списка и сохранить их в связке связанные с альбомом
-            for (Genre genre : includedChoiceCheckBoxController.getItemMap().keySet()) {
+            for (GenreEntity genre : includedChoiceCheckBoxController.getItemMap().keySet()) {
                 ObservableValue<Boolean> value = includedChoiceCheckBoxController.getItemMap().get(genre);
                 if (value.getValue()) {
                     AlbumGenreEntity albumGenre = new AlbumGenreEntity();

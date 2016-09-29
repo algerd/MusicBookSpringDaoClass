@@ -1,8 +1,8 @@
 package com.algerd.musicbookspringmaven.controller.genre;
 
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,7 +24,7 @@ import com.algerd.musicbookspringmaven.utils.ImageUtil;
 
 public class GenrePaneController extends BasePaneController {
        
-    private Genre genre;
+    private GenreEntity genre;
     private File file;
     private long imageLastModified;
     
@@ -60,7 +60,7 @@ public class GenrePaneController extends BasePaneController {
     
     @Override
     public void show(Entity entity) {
-        genre = (Genre) entity;  
+        genre = (GenreEntity) entity;  
         showDetails();
         view.setVisible(true);
         initRepositoryListeners(); 
@@ -80,7 +80,7 @@ public class GenrePaneController extends BasePaneController {
     }
     
     private void deletedGenre(ObservableValue observable, Object oldVal, Object newVal) {
-        Genre newEntity = ((WrapChangedEntity<Genre>) newVal).getNew();
+        GenreEntity newEntity = ((WrapChangedEntity<GenreEntity>) newVal).getNew();
         if (newEntity.getId() == genre.getId()) {
             view.setVisible(false);
         }
@@ -110,14 +110,14 @@ public class GenrePaneController extends BasePaneController {
     private void showContextMenu(MouseEvent mouseEvent) {
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {       
-            contextMenuService.add(ADD_GENRE, new Genre());
+            contextMenuService.add(ADD_GENRE, new GenreEntity());
             contextMenuService.add(EDIT_GENRE, genre);
             contextMenuService.add(DELETE_GENRE, genre);
             contextMenuService.show(view, mouseEvent);
         }      
     }
 
-    public Genre getGenre() {
+    public GenreEntity getGenre() {
         return genre;
     }
  

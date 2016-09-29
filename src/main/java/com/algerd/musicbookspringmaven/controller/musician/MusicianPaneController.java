@@ -18,17 +18,17 @@ import javafx.scene.text.Text;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Musician;
-import com.algerd.musicbookspringmaven.entity.MusicianGroup;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianGroup.MusicianGroupEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
 
 public class MusicianPaneController extends BasePaneController {
 
-    private Musician musician; 
+    private MusicianEntity musician; 
     private File file;
     private long imageLastModified;
        
@@ -79,7 +79,7 @@ public class MusicianPaneController extends BasePaneController {
     
     @Override
     public void show(Entity entity) {
-        musician = (Musician) entity; 
+        musician = (MusicianEntity) entity; 
         showDetails();
         view.setVisible(true);
         initRepositoryListeners();
@@ -102,7 +102,7 @@ public class MusicianPaneController extends BasePaneController {
     }
     
     private void deletedMusician(ObservableValue observable, Object oldVal, Object newVal) {
-        Musician newEntity = ((WrapChangedEntity<Musician>) newVal).getNew();
+        MusicianEntity newEntity = ((WrapChangedEntity<MusicianEntity>) newVal).getNew();
         if (newEntity.getId() == musician.getId()) {
             view.setVisible(false);
         }
@@ -136,18 +136,18 @@ public class MusicianPaneController extends BasePaneController {
     private void showContextMenu(MouseEvent mouseEvent) {
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-            contextMenuService.add(ADD_MUSICIAN, new Musician());
+            contextMenuService.add(ADD_MUSICIAN, new MusicianEntity());
             contextMenuService.add(EDIT_MUSICIAN, musician);
             contextMenuService.add(DELETE_MUSICIAN, musician);
             contextMenuService.add(SEPARATOR);  
-            MusicianGroup newMusicianGroup = new MusicianGroup();
+            MusicianGroupEntity newMusicianGroup = new MusicianGroupEntity();
             newMusicianGroup.setId_musician(musician.getId());
             contextMenuService.add(ADD_MUSICIAN_GROUP, newMusicianGroup);      
             contextMenuService.show(view, mouseEvent);
         }      
     }
 
-    public Musician getMusician() {
+    public MusicianEntity getMusician() {
         return musician;
     }   
         

@@ -2,7 +2,7 @@
 package com.algerd.musicbookspringmaven.service;
 
 import com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;

@@ -24,11 +24,11 @@ import javafx.collections.ObservableList;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 
 public class ArtistsPaneController extends BasePaneController {
    
@@ -36,13 +36,13 @@ public class ArtistsPaneController extends BasePaneController {
     private List<ArtistEntity> artists;
     // filter properties   
     private String searchString = "";
-    private Genre genre;
+    private GenreEntity genre;
     private final IntegerProperty minRating = new SimpleIntegerProperty();
     private final IntegerProperty maxRating = new SimpleIntegerProperty();
           
     //filter
     @FXML
-    private ChoiceBox<Genre> genreChoiceBox;
+    private ChoiceBox<GenreEntity> genreChoiceBox;
     @FXML
     private Spinner<Integer> minRatingSpinner; 
     @FXML
@@ -158,13 +158,13 @@ public class ArtistsPaneController extends BasePaneController {
     
     private void initGenreChoiceBox() {
         Helper.initEntityChoiceBox(genreChoiceBox);
-        genre = new Genre();
+        genre = new GenreEntity();
         genre.setId(-1);
         genre.setName("All genres");
         genreChoiceBox.getItems().clear();
         genreChoiceBox.getItems().add(genre);
-        List<Genre> genres = repositoryService.getGenreRepository().selectAll();
-        genres.sort(Comparator.comparing(Genre::getName));       
+        List<GenreEntity> genres = repositoryService.getGenreRepository().selectAll();
+        genres.sort(Comparator.comparing(GenreEntity::getName));       
         genreChoiceBox.getItems().addAll(genres);
         genreChoiceBox.getSelectionModel().selectFirst();
     }

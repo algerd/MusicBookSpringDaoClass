@@ -1,6 +1,6 @@
 package com.algerd.musicbookspringmaven.controller.helper.inputImageBox;
 
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 import java.io.File;
 import java.net.URL;

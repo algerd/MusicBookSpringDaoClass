@@ -22,7 +22,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.repository.ArtistReference.ArtistReferenceEntity;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;

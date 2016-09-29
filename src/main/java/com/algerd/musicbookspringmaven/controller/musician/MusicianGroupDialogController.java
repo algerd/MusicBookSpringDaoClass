@@ -9,19 +9,19 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Musician;
-import com.algerd.musicbookspringmaven.entity.MusicianGroup;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianGroup.MusicianGroupEntity;
 import javafx.scene.layout.AnchorPane;
 
 public class MusicianGroupDialogController extends BaseDialogController {
    
-    private MusicianGroup musicianGroup;    
+    private MusicianGroupEntity musicianGroup;    
     
     @FXML
     private AnchorPane view;
     @FXML
-    private ChoiceBox<Musician> musicianChoiceBox;
+    private ChoiceBox<MusicianEntity> musicianChoiceBox;
     @FXML
     private ChoiceBox<ArtistEntity> artistChoiceBox;
     @FXML
@@ -42,9 +42,9 @@ public class MusicianGroupDialogController extends BaseDialogController {
     @FXML
     private void handleOkButton() {
         if (isInputValid()) {
-            Musician musician = musicianChoiceBox.getValue();
+            MusicianEntity musician = musicianChoiceBox.getValue();
             ArtistEntity artist = artistChoiceBox.getValue();
-            if (!repositoryService.getMusicianGroupRepository().containsMusicianArtist(musician, artist)) {
+            if (!repositoryService.getMusicianGroupRepository().containsMusicianGroupByMusicianAndArtist(musician, artist)) {
                 musicianGroup.setId_artist(artistChoiceBox.getValue().getId());
                 musicianGroup.setId_musician(musicianChoiceBox.getValue().getId());
                 musicianGroup.setStart_date(startDatePicker.getEditor().getText());
@@ -110,7 +110,7 @@ public class MusicianGroupDialogController extends BaseDialogController {
       
     @Override
     public void setEntity(Entity entity) {
-        musicianGroup = (MusicianGroup) entity;
+        musicianGroup = (MusicianGroupEntity) entity;
         super.setEntity(entity);
     }
        

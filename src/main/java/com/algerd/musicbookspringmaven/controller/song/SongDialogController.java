@@ -23,15 +23,15 @@ import com.algerd.musicbookspringmaven.controller.helper.choiceCheckBox.ChoiceCh
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.entity.Song;
-import com.algerd.musicbookspringmaven.entity.SongGenre;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
+import com.algerd.musicbookspringmaven.repository.SongGenre.SongGenreEntity;
 import com.algerd.musicbookspringmaven.controller.helper.inputImageBox.DialogImageBoxController;
 
 public class SongDialogController extends BaseDialogController {
    
-    private Song song;
+    private SongEntity song;
        
     private final IntegerProperty rating = new SimpleIntegerProperty();
     private final IntegerProperty track = new SimpleIntegerProperty();
@@ -66,7 +66,7 @@ public class SongDialogController extends BaseDialogController {
     @FXML   
     private AnchorPane includedChoiceCheckBox;
     @FXML
-    private ChoiceCheckBoxController<Genre> includedChoiceCheckBoxController;    
+    private ChoiceCheckBoxController<GenreEntity> includedChoiceCheckBoxController;    
                              
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,13 +103,13 @@ public class SongDialogController extends BaseDialogController {
     }
     
     private void initGenreChoiceCheckBox() {
-        List<Genre> artistGenres = new ArrayList<>();
+        List<GenreEntity> artistGenres = new ArrayList<>();
         if (edit) {        
-            repositoryService.getSongGenreRepository().selectJoinBySong(song).stream().forEach(artistGenre -> {
+            repositoryService.getSongGenreRepository().selectSongGenreBySong(song).stream().forEach(artistGenre -> {
                 artistGenres.add(artistGenre.getGenre());
             });
         }
-        Map<Genre, ObservableValue<Boolean>> map = new HashMap<>();
+        Map<GenreEntity, ObservableValue<Boolean>> map = new HashMap<>();
         repositoryService.getGenreRepository().selectAll().stream().forEach(genre -> {                     
             map.put(genre, new SimpleBooleanProperty(artistGenres.contains(genre)));
         });
@@ -139,13 +139,13 @@ public class SongDialogController extends BaseDialogController {
                 repositoryService.getSongRepository().save(song);   
             } else {           
                 // Cначала удалить все жанры из бд для песни, а потом добавить
-                repositoryService.getSongGenreRepository().deleteBySong(song);
+                repositoryService.getSongGenreRepository().deleteSongGenreBySong(song);
             } 
             // Извлечь жанры из списка и сохранить их в связке связанные с песней
-            for (Genre genre : includedChoiceCheckBoxController.getItemMap().keySet()) {
+            for (GenreEntity genre : includedChoiceCheckBoxController.getItemMap().keySet()) {
                 ObservableValue<Boolean> value = includedChoiceCheckBoxController.getItemMap().get(genre);
                 if (value.getValue()) {
-                    SongGenre songGenre = new SongGenre();
+                    SongGenreEntity songGenre = new SongGenreEntity();
                     songGenre.setId_song(song.getId());
                     songGenre.setId_genre(genre.getId());
                     repositoryService.getSongGenreRepository().save(songGenre);
@@ -176,7 +176,7 @@ public class SongDialogController extends BaseDialogController {
         if (nameField.getText() == null || nameField.getText().trim().equals("")) {
             errorMessage += "Введите название песни!\n"; 
         }
-        if (!edit && repositoryService.getSongRepository().containsSong(nameField.getText(), albumField.getValue())) {
+        if (!edit && repositoryService.getSongRepository().containsSongBySongNameAndAlbum(nameField.getText(), albumField.getValue())) {
             errorMessage += "Такая песня уже есть у альбома!\n";
         } 
         if (errorMessage.equals("")) {
@@ -225,7 +225,7 @@ public class SongDialogController extends BaseDialogController {
        
     @Override
     public void setEntity(Entity entity) {
-        song = (Song) entity;
+        song = (SongEntity) entity;
         super.setEntity(entity);
     }
     

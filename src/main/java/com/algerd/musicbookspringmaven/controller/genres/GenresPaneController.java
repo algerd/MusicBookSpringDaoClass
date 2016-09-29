@@ -21,18 +21,18 @@ import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
 import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.entity.MusicianGenre;
-import com.algerd.musicbookspringmaven.entity.SongGenre;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
+import com.algerd.musicbookspringmaven.repository.SongGenre.SongGenreEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_GENRE;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_GENRE;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_GENRE;
 
 public class GenresPaneController extends BasePaneController {
     
-    private Genre selectedItem;
-    private List<Genre> genres;
+    private GenreEntity selectedItem;
+    private List<GenreEntity> genres;
     private String searchString = "";
     
     @FXML
@@ -41,25 +41,25 @@ public class GenresPaneController extends BasePaneController {
     private Label resetSearchLabel; 
     //table
     @FXML
-    private TableView<Genre> genresTable;
+    private TableView<GenreEntity> genresTable;
     @FXML
-    private TableColumn<Genre, String> genreColumn;
+    private TableColumn<GenreEntity, String> genreColumn;
     @FXML
-    private TableColumn<Genre, Genre> artistsAmountColumn;
+    private TableColumn<GenreEntity, GenreEntity> artistsAmountColumn;
     @FXML
-    private TableColumn<Genre, Genre> artistsAvRatingColumn;
+    private TableColumn<GenreEntity, GenreEntity> artistsAvRatingColumn;
     @FXML
-    private TableColumn<Genre, Genre> albumsAmountColumn;
+    private TableColumn<GenreEntity, GenreEntity> albumsAmountColumn;
     @FXML
-    private TableColumn<Genre, Genre> albumsAvRatingColumn;
+    private TableColumn<GenreEntity, GenreEntity> albumsAvRatingColumn;
     @FXML
-    private TableColumn<Genre, Genre> songsAmountColumn;
+    private TableColumn<GenreEntity, GenreEntity> songsAmountColumn;
     @FXML
-    private TableColumn<Genre, Genre> songsAvRatingColumn;
+    private TableColumn<GenreEntity, GenreEntity> songsAvRatingColumn;
     @FXML
-    private TableColumn<Genre, Genre> musiciansAmountColumn;
+    private TableColumn<GenreEntity, GenreEntity> musiciansAmountColumn;
     @FXML
-    private TableColumn<Genre, Genre> musiciansAvRatingColumn;    
+    private TableColumn<GenreEntity, GenreEntity> musiciansAvRatingColumn;    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,9 +81,9 @@ public class GenresPaneController extends BasePaneController {
         
         artistsAmountColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         artistsAmountColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
@@ -95,9 +95,9 @@ public class GenresPaneController extends BasePaneController {
         });
         artistsAvRatingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         artistsAvRatingColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
@@ -115,9 +115,9 @@ public class GenresPaneController extends BasePaneController {
         }); 
         albumsAmountColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         albumsAmountColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
@@ -129,9 +129,9 @@ public class GenresPaneController extends BasePaneController {
         });
         albumsAvRatingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         albumsAvRatingColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
@@ -149,13 +149,13 @@ public class GenresPaneController extends BasePaneController {
         });
         songsAmountColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         songsAmountColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        this.setText("" + repositoryService.getSongGenreRepository().countSongsByGenre(item));                   
+                        this.setText("" + repositoryService.getSongGenreRepository().countSongGenreByGenre(item));                   
                     }
                 }
             };
@@ -163,15 +163,15 @@ public class GenresPaneController extends BasePaneController {
         });
         songsAvRatingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         songsAvRatingColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        List<SongGenre> songGenres = repositoryService.getSongGenreRepository().selectJoinByGenre(item);
+                        List<SongGenreEntity> songGenres = repositoryService.getSongGenreRepository().selectSongGenreByGenre(item);
                         int averageRating = 0;
-                        for (SongGenre songGenre : songGenres) {
+                        for (SongGenreEntity songGenre : songGenres) {
                             averageRating += songGenre.getSong().getRating();
                         }
                         int count = songGenres.size();
@@ -183,13 +183,13 @@ public class GenresPaneController extends BasePaneController {
         });
         musiciansAmountColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         musiciansAmountColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        this.setText("" + repositoryService.getMusicianGenreRepository().countMusiciansByGenre(item));                   
+                        this.setText("" + repositoryService.getMusicianGenreRepository().countMusicianGenreByGenre(item));                   
                     }
                 }
             };
@@ -197,15 +197,15 @@ public class GenresPaneController extends BasePaneController {
         });
         musiciansAvRatingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         musiciansAvRatingColumn.setCellFactory(col -> {
-            TableCell<Genre, Genre> cell = new TableCell<Genre, Genre>() {
+            TableCell<GenreEntity, GenreEntity> cell = new TableCell<GenreEntity, GenreEntity>() {
                 @Override
-                public void updateItem(Genre item, boolean empty) {
+                public void updateItem(GenreEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     this.setText(null);
                     if (!empty) {                        
-                        List<MusicianGenre> musicianGenres = repositoryService.getMusicianGenreRepository().selectJoinByGenre(item);
+                        List<MusicianGenreEntity> musicianGenres = repositoryService.getMusicianGenreRepository().selectMusicianGenreByGenre(item);
                         int averageRating = 0;
-                        for (MusicianGenre musicianGenre : musicianGenres) {
+                        for (MusicianGenreEntity musicianGenre : musicianGenres) {
                             averageRating += musicianGenre.getMusician().getRating();
                         }
                         int count = musicianGenres.size();
@@ -273,10 +273,10 @@ public class GenresPaneController extends BasePaneController {
     }
     
     private void filter() {
-        ObservableList<Genre> filteredList = FXCollections.observableArrayList();
+        ObservableList<GenreEntity> filteredList = FXCollections.observableArrayList();
         int lengthSearch = searchString.length();
         
-        for (Genre genre : genres) {
+        for (GenreEntity genre : genres) {
             if ((searchString.equals("") || genre.getName().regionMatches(true, 0, searchString, 0, lengthSearch))) {                                      
                 filteredList.add(genre);                
             }
@@ -287,7 +287,7 @@ public class GenresPaneController extends BasePaneController {
     }
     
     private void sort() {
-        genresTable.getItems().sort(Comparator.comparing(Genre::getName));
+        genresTable.getItems().sort(Comparator.comparing(GenreEntity::getName));
     }
     
     private void clearSelectionTable() {
@@ -312,14 +312,14 @@ public class GenresPaneController extends BasePaneController {
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Genre genre = repositoryService.getGenreRepository().selectById(selectedItem.getId());
+                GenreEntity genre = repositoryService.getGenreRepository().selectById(selectedItem.getId());
                 requestPageService.genrePane(genre);
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            contextMenuService.add(ADD_GENRE, new Genre());
+            contextMenuService.add(ADD_GENRE, new GenreEntity());
             if (selectedItem != null && selectedItem.getId() > 1) {
-                Genre genre = repositoryService.getGenreRepository().selectById(selectedItem.getId());
+                GenreEntity genre = repositoryService.getGenreRepository().selectById(selectedItem.getId());
                 contextMenuService.add(EDIT_GENRE, genre);
                 contextMenuService.add(DELETE_GENRE, genre);                       
             }
@@ -332,7 +332,7 @@ public class GenresPaneController extends BasePaneController {
         clearSelectionTable();
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {       
-            contextMenuService.add(ADD_GENRE, new Genre());
+            contextMenuService.add(ADD_GENRE, new GenreEntity());
             contextMenuService.show(view, mouseEvent);
         }      
     }

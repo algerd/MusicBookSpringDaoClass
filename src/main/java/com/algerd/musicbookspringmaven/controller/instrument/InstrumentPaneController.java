@@ -16,16 +16,16 @@ import javafx.scene.text.Text;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Instrument;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Instrument.InstrumentEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_INSTRUMENT;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_INSTRUMENT;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_INSTRUMENT;
 
 public class InstrumentPaneController extends BasePaneController {
 
-    private Instrument instrument;
+    private InstrumentEntity instrument;
     private File file;
     private long imageLastModified;
     
@@ -49,7 +49,7 @@ public class InstrumentPaneController extends BasePaneController {
     
     @Override
     public void show(Entity entity) {
-        instrument = (Instrument) entity;  
+        instrument = (InstrumentEntity) entity;  
         showDetails(); 
         view.setVisible(true);
         initRepositoryListeners();
@@ -66,7 +66,7 @@ public class InstrumentPaneController extends BasePaneController {
     }
     
     private void deletedInstrument(ObservableValue observable, Object oldVal, Object newVal) {
-        Instrument newEntity = ((WrapChangedEntity<Instrument>) newVal).getNew();
+        InstrumentEntity newEntity = ((WrapChangedEntity<InstrumentEntity>) newVal).getNew();
         if (newEntity.getId() == instrument.getId()) {
             view.setVisible(false);
         }
@@ -96,14 +96,14 @@ public class InstrumentPaneController extends BasePaneController {
     private void showContextMenu(MouseEvent mouseEvent) {
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {       
-            contextMenuService.add(ADD_INSTRUMENT, new Instrument());
+            contextMenuService.add(ADD_INSTRUMENT, new InstrumentEntity());
             contextMenuService.add(EDIT_INSTRUMENT, instrument);
             contextMenuService.add(DELETE_INSTRUMENT, instrument);
             contextMenuService.show(view, mouseEvent);
         }      
     }
 
-    public Instrument getInstrument() {
+    public InstrumentEntity getInstrument() {
         return instrument;
     }
     

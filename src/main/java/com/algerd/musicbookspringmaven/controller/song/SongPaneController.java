@@ -18,9 +18,9 @@ import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Song;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_SONG;
@@ -29,7 +29,7 @@ public class SongPaneController extends BasePaneController {
    
     private ArtistEntity artist;
     private AlbumEntity album;
-    private Song song;
+    private SongEntity song;
     private File file;
     private long imageLastModified;
     
@@ -71,7 +71,7 @@ public class SongPaneController extends BasePaneController {
        
     @Override
     public void show(Entity entity) {
-        this.song = (Song) entity;            
+        this.song = (SongEntity) entity;            
         showDetails();
         view.setVisible(true);
         initRepositoryListeners();
@@ -91,7 +91,7 @@ public class SongPaneController extends BasePaneController {
     }
     
     private void deletedSong(ObservableValue observable, Object oldVal, Object newVal) {
-        Song newEntity = ((WrapChangedEntity<Song>) newVal).getNew();
+        SongEntity newEntity = ((WrapChangedEntity<SongEntity>) newVal).getNew();
         if (newEntity.getId() == song.getId()) {
             view.setVisible(false);
         }
@@ -139,7 +139,7 @@ public class SongPaneController extends BasePaneController {
     private void showContextMenu(MouseEvent mouseEvent) {
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-            Song newSong = new Song();
+            SongEntity newSong = new SongEntity();
             newSong.setId_album(song.getId_album());
             contextMenuService.add(ADD_SONG, newSong);
             contextMenuService.add(EDIT_SONG, song);
@@ -148,7 +148,7 @@ public class SongPaneController extends BasePaneController {
         }      
     }
 
-    public Song getSong() {
+    public SongEntity getSong() {
         return song;
     }
 

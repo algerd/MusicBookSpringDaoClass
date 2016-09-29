@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.entity.Song;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import com.algerd.musicbookspringmaven.service.RepositoryService;
 
 public class ArtistTreeItem extends TreeItem {
@@ -44,9 +44,9 @@ public class ArtistTreeItem extends TreeItem {
                 leafNode = !repositoryService.getAlbumRepository().containsArtist((ArtistEntity) obj);
             }
             else if (obj instanceof AlbumEntity) {
-                leafNode = !repositoryService.getSongRepository().containsAlbum((AlbumEntity) obj);          
+                leafNode = !repositoryService.getSongRepository().containsSongByAlbum((AlbumEntity) obj);          
             }
-            else if (obj instanceof Song) {
+            else if (obj instanceof SongEntity) {
                 leafNode = true;
             }
             else {
@@ -68,9 +68,9 @@ public class ArtistTreeItem extends TreeItem {
             }            
         }
         else if (obj instanceof AlbumEntity) {
-            List<Song> songs = repositoryService.getSongRepository().selectByAlbum((AlbumEntity) obj);
-            songs.sort(Comparator.comparingInt(Song::getTrack));
-            for (Song song : songs) {
+            List<SongEntity> songs = repositoryService.getSongRepository().selectSongByAlbum((AlbumEntity) obj);
+            songs.sort(Comparator.comparingInt(SongEntity::getTrack));
+            for (SongEntity song : songs) {
                 getChildren().add(new ArtistTreeItem(song, repositoryService));
             }            
         }	

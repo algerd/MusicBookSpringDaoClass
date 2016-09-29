@@ -25,24 +25,24 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
-import com.algerd.musicbookspringmaven.entity.SongGenre;
+import com.algerd.musicbookspringmaven.repository.SongGenre.SongGenreEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.entity.Song;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 
 public class SongsPaneController extends BasePaneController implements Initializable {
    
-    private Song selectedItem;
-    private List<Song> songs;   
+    private SongEntity selectedItem;
+    private List<SongEntity> songs;   
     // filter properties   
     private String searchString = "";  
-    private Genre genre;
+    private GenreEntity genre;
     private final IntegerProperty minRating = new SimpleIntegerProperty();
     private final IntegerProperty maxRating = new SimpleIntegerProperty();
        
     @FXML
-    private ChoiceBox<Genre> genreChoiceBox;
+    private ChoiceBox<GenreEntity> genreChoiceBox;
     @FXML
     private Spinner<Integer> minRatingSpinner; 
     @FXML
@@ -55,19 +55,19 @@ public class SongsPaneController extends BasePaneController implements Initializ
     private ChoiceBox<String> searchChoiceBox;   
     /* ************ songsTable *************** */
     @FXML
-    private TableView<Song> songsTable;
+    private TableView<SongEntity> songsTable;
     @FXML
-    private TableColumn<Song, Integer> rankColumn;
+    private TableColumn<SongEntity, Integer> rankColumn;
     @FXML
-    private TableColumn<Song, String> songColumn;
+    private TableColumn<SongEntity, String> songColumn;
     @FXML
-    private TableColumn<Song, String> artistColumn;
+    private TableColumn<SongEntity, String> artistColumn;
     @FXML
-    private TableColumn<Song, String> albumColumn;
+    private TableColumn<SongEntity, String> albumColumn;
     @FXML
-    private TableColumn<Song, Integer> yearColumn;            
+    private TableColumn<SongEntity, Integer> yearColumn;            
     @FXML
-    private TableColumn<Song, Integer> ratingColumn;  
+    private TableColumn<SongEntity, Integer> ratingColumn;  
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -107,7 +107,7 @@ public class SongsPaneController extends BasePaneController implements Initializ
     }
     
     private void setTableValue() {
-        songs = repositoryService.getSongRepository().selectJoin();    
+        songs = repositoryService.getSongRepository().selectAllSongs();    
         songsTable.setItems(FXCollections.observableArrayList(songs));      
         sort();       
         Helper.setHeightTable(songsTable, 10);  
@@ -164,13 +164,13 @@ public class SongsPaneController extends BasePaneController implements Initializ
     
     private void initGenreChoiceBox() {
         Helper.initEntityChoiceBox(genreChoiceBox);
-        genre = new Genre();
+        genre = new GenreEntity();
         genre.setId(-1);
         genre.setName("All genres");
         genreChoiceBox.getItems().clear();
         genreChoiceBox.getItems().add(genre);
-        List<Genre> genres = repositoryService.getGenreRepository().selectAll();
-        genres.sort(Comparator.comparing(Genre::getName));
+        List<GenreEntity> genres = repositoryService.getGenreRepository().selectAll();
+        genres.sort(Comparator.comparing(GenreEntity::getName));
         genreChoiceBox.getItems().addAll(genres);
         genreChoiceBox.getSelectionModel().selectFirst();
     }
@@ -193,16 +193,16 @@ public class SongsPaneController extends BasePaneController implements Initializ
     }
       
     private void filter() {
-        ObservableList<Song> filteredList = FXCollections.observableArrayList();
+        ObservableList<SongEntity> filteredList = FXCollections.observableArrayList();
         int lengthSearch = searchString.length();        
         int selectedIndex = searchChoiceBox.getSelectionModel().getSelectedIndex();
                 
-        for (Song song : songs) {
+        for (SongEntity song : songs) {
             //фильтр по жанру альбома
             boolean isGenre = false;
             if (genre.getId() != -1) {              
-                List<SongGenre> songGenres = repositoryService.getSongGenreRepository().selectJoinBySong(song);
-                for (SongGenre songGenre : songGenres) {
+                List<SongGenreEntity> songGenres = repositoryService.getSongGenreRepository().selectSongGenreBySong(song);
+                for (SongGenreEntity songGenre : songGenres) {
                     if (songGenre.getId_genre() == genre.getId()) {
                         isGenre = true;
                         break;
@@ -218,7 +218,7 @@ public class SongsPaneController extends BasePaneController implements Initializ
                 && (song.getRating() >= getMinRating() && song.getRating() <= getMaxRating()) 
                 // search
                 && (searchString.equals("")
-                 // Проверить выбор в SearchChoiceBox (0 - Song, 1 - Album, 2 - Artist)   
+                 // Проверить выбор в SearchChoiceBox (0 - SongEntity, 1 - Album, 2 - Artist)   
                 || (selectedIndex == 0 && song.getName().regionMatches(true, 0, searchString, 0, lengthSearch)) 
                 || (selectedIndex == 1 && song.getAlbum().getName().regionMatches(true, 0, searchString, 0, lengthSearch)) 
                 || (selectedIndex == 2 && song.getAlbum().getArtist().getName().regionMatches(true, 0, searchString, 0, lengthSearch)))    
@@ -232,7 +232,7 @@ public class SongsPaneController extends BasePaneController implements Initializ
     }
     
     private void sort() {
-        songsTable.getItems().sort(Comparator.comparingInt(Song::getRating).reversed());
+        songsTable.getItems().sort(Comparator.comparingInt(SongEntity::getRating).reversed());
     }
     
     private void clearSelectionTable() {
@@ -269,17 +269,17 @@ public class SongsPaneController extends BasePaneController implements Initializ
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Song song = repositoryService.getSongRepository().selectById(selectedItem.getId());
+                SongEntity song = repositoryService.getSongRepository().selectById(selectedItem.getId());
                 requestPageService.songPane(song);
             }           
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
             // id = 1 is "Unknown" albom of "Unknown" artist
-            Song newSong = new Song();
+            SongEntity newSong = new SongEntity();
             newSong.setId_album(1);
             contextMenuService.add(ADD_SONG, newSong);                
             if (selectedItem != null) {
-                Song song = repositoryService.getSongRepository().selectById(selectedItem.getId());
+                SongEntity song = repositoryService.getSongRepository().selectById(selectedItem.getId());
                 contextMenuService.add(EDIT_SONG, song);
                 contextMenuService.add(DELETE_SONG, song);                       
             }
@@ -293,7 +293,7 @@ public class SongsPaneController extends BasePaneController implements Initializ
         contextMenuService.clear();
 		if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
             // id = 1 is "Unknown" albom of "Unknown" artist
-            Song newSong = new Song();
+            SongEntity newSong = new SongEntity();
             newSong.setId_album(1);
             contextMenuService.add(ADD_SONG, newSong);   
             contextMenuService.show(view, mouseEvent);

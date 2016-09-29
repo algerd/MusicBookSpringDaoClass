@@ -12,8 +12,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.beans.value.ObservableValue;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.entity.MusicianGenre;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 
 public class GenreListController extends BaseIncludeController<MusicianPaneController> {
@@ -21,7 +21,7 @@ public class GenreListController extends BaseIncludeController<MusicianPaneContr
     @FXML
     private AnchorPane genreList;
     @FXML
-    private ListView<Genre> genreListView;
+    private ListView<GenreEntity> genreListView;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
@@ -34,15 +34,15 @@ public class GenreListController extends BaseIncludeController<MusicianPaneContr
     }
     
     private void setListValue() {
-        List<Genre> genres = new ArrayList<>();
-        List<MusicianGenre> musicianGenres = repositoryService.getMusicianGenreRepository().selectJoinByMusician(paneController.getMusician());
+        List<GenreEntity> genres = new ArrayList<>();
+        List<MusicianGenreEntity> musicianGenres = repositoryService.getMusicianGenreRepository().selectMusicianGenreByMusician(paneController.getMusician());
         musicianGenres.stream().forEach(musicianGenre -> genres.add(musicianGenre.getGenre()));     
         genreListView.getItems().clear();       
         if (!genres.isEmpty()) {
             genreListView.getItems().addAll(genres);
             sort();
         } else {
-            Genre genre = new Genre();
+            GenreEntity genre = new GenreEntity();
             genre.setName("Unknown");
             genreListView.getItems().add(genre);
         }                     
@@ -71,18 +71,18 @@ public class GenreListController extends BaseIncludeController<MusicianPaneContr
     
     private void sort() {
         genreListView.getSelectionModel().clearSelection();
-        genreListView.getItems().sort(Comparator.comparing(Genre::getName));
+        genreListView.getItems().sort(Comparator.comparing(GenreEntity::getName));
     }  
     
     @FXML
     private void onMouseClickGenreList(MouseEvent mouseEvent) {    
         contextMenuService.clear();   
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {           
-            Genre selectedItem = genreListView.getSelectionModel().getSelectedItem();
+            GenreEntity selectedItem = genreListView.getSelectionModel().getSelectedItem();
             // если лкм выбрана запись - показать её
             if (selectedItem != null && selectedItem.getId() != 0) {
                 // Дозагрузка
-                Genre genre = repositoryService.getGenreRepository().selectById(selectedItem.getId());
+                GenreEntity genre = repositoryService.getGenreRepository().selectById(selectedItem.getId());
                 requestPageService.genrePane(genre);
             }           
         }

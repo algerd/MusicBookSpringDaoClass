@@ -9,27 +9,27 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Musician;
-import com.algerd.musicbookspringmaven.entity.MusicianSong;
-import com.algerd.musicbookspringmaven.entity.Song;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianSong.MusicianSongEntity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import javafx.scene.layout.AnchorPane;
 
 public class MusicianSongDialogController extends BaseDialogController {
     
-    private MusicianSong musicianSong;    
+    private MusicianSongEntity musicianSong;    
     
     @FXML
     private AnchorPane view;
     @FXML
-    private ChoiceBox<Musician> musicianChoiceBox;
+    private ChoiceBox<MusicianEntity> musicianChoiceBox;
     @FXML
     private ChoiceBox<ArtistEntity> artistChoiceBox;
     @FXML
     private ChoiceBox<AlbumEntity> albumChoiceBox;
     @FXML
-    private ChoiceBox<Song> songChoiceBox;
+    private ChoiceBox<SongEntity> songChoiceBox;
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
@@ -70,7 +70,7 @@ public class MusicianSongDialogController extends BaseDialogController {
         songChoiceBox.getItems().clear();
         AlbumEntity album = albumChoiceBox.getSelectionModel().getSelectedItem();
         if (album != null) {
-            songChoiceBox.getItems().addAll(repositoryService.getSongRepository().selectByAlbum(album));
+            songChoiceBox.getItems().addAll(repositoryService.getSongRepository().selectSongByAlbum(album));
             songChoiceBox.getSelectionModel().selectFirst();
         }
     }    
@@ -79,9 +79,9 @@ public class MusicianSongDialogController extends BaseDialogController {
     @FXML
     private void handleOkButton() {
         if (isInputValid()) {
-            Musician musician = musicianChoiceBox.getValue();
-            Song song = songChoiceBox.getValue();
-            if (!repositoryService.getMusicianSongRepository().containsMusicianSong(musician, song)) {
+            MusicianEntity musician = musicianChoiceBox.getValue();
+            SongEntity song = songChoiceBox.getValue();
+            if (!repositoryService.getMusicianSongRepository().containsMusicianSongByMusicianAndSong(musician, song)) {
                 musicianSong.setId_musician(musician.getId());
                 musicianSong.setId_song(song.getId());
                 repositoryService.getMusicianSongRepository().save(musicianSong);               
@@ -104,7 +104,7 @@ public class MusicianSongDialogController extends BaseDialogController {
     protected void add() { 
         musicianChoiceBox.getSelectionModel().select(repositoryService.getMusicianRepository().selectById(musicianSong.getId_musician()));
     
-        Song song = repositoryService.getSongRepository().selectById(musicianSong.getId_song());
+        SongEntity song = repositoryService.getSongRepository().selectById(musicianSong.getId_song());
         AlbumEntity album = repositoryService.getAlbumRepository().selectById(song.getId_album()); 
         ArtistEntity artist = repositoryService.getArtistRepository().selectById(album.getId_artist()); 
         artistChoiceBox.getSelectionModel().select(artist);
@@ -133,7 +133,7 @@ public class MusicianSongDialogController extends BaseDialogController {
        
     @Override
     public void setEntity(Entity entity) {
-        musicianSong = (MusicianSong) entity;
+        musicianSong = (MusicianSongEntity) entity;
         super.setEntity(entity);
     }
     

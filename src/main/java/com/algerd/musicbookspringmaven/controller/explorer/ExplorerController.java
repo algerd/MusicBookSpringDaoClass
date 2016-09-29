@@ -16,8 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Song;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -89,7 +89,7 @@ public class ExplorerController extends BaseAwareController implements Initializ
                 else if(entity instanceof AlbumEntity) {
                     requestPageService.albumPane(entity);
                 }
-                else if (entity instanceof Song) {
+                else if (entity instanceof SongEntity) {
                     requestPageService.songPane(entity);
                 }               
             }            
@@ -131,13 +131,13 @@ public class ExplorerController extends BaseAwareController implements Initializ
                     contextMenuService.add(DELETE_ALBUM, album);
                     contextMenuService.add(SEPARATOR);
                 }
-                Song song = new Song();
+                SongEntity song = new SongEntity();
                 song.setId_album(album.getId());
                 contextMenuService.add(ADD_SONG, song);
             } 
-            else if(entity instanceof Song) {
-                Song song = (Song) entity;
-                Song newSong = new Song();
+            else if(entity instanceof SongEntity) {
+                SongEntity song = (SongEntity) entity;
+                SongEntity newSong = new SongEntity();
                 newSong.setId_album(song.getId_album());
                 contextMenuService.add(ADD_SONG, newSong);
                 contextMenuService.add(EDIT_SONG, song);

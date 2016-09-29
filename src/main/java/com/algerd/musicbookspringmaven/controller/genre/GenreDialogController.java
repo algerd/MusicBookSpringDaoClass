@@ -8,14 +8,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Genre;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.controller.helper.inputImageBox.DialogImageBoxController;
 
 public class GenreDialogController extends BaseDialogController {
     
-    private Genre genre;
+    private GenreEntity genre;
     
     @FXML
     private AnchorPane view;
@@ -98,7 +98,7 @@ public class GenreDialogController extends BaseDialogController {
         
     @Override
     public void setEntity(Entity entity) {
-        genre = (Genre) entity;
+        genre = (GenreEntity) entity;
         super.setEntity(entity);    
     }
     

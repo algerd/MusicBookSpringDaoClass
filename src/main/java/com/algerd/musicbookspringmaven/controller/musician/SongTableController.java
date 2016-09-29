@@ -16,32 +16,32 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.MusicianSong;
-import com.algerd.musicbookspringmaven.entity.Song;
+import com.algerd.musicbookspringmaven.repository.MusicianSong.MusicianSongEntity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN_SONG;
 import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_MUSICIAN_SONG;
 
 public class SongTableController extends BaseIncludeController<MusicianPaneController> {
     
-    private MusicianSong selectedItem;   
+    private MusicianSongEntity selectedItem;   
     
     @FXML
     private AnchorPane songTable;
     @FXML
     private Label titleLabel;
     @FXML
-    private TableView<MusicianSong> songTableView;
+    private TableView<MusicianSongEntity> songTableView;
     @FXML
-    private TableColumn<MusicianSong, String> artistColumn;
+    private TableColumn<MusicianSongEntity, String> artistColumn;
     @FXML
-    private TableColumn<MusicianSong, String> albumColumn;   
+    private TableColumn<MusicianSongEntity, String> albumColumn;   
     @FXML
-    private TableColumn<MusicianSong, Integer> yearColumn;
+    private TableColumn<MusicianSongEntity, Integer> yearColumn;
     @FXML
-    private TableColumn<MusicianSong, String> songColumn;       
+    private TableColumn<MusicianSongEntity, String> songColumn;       
     @FXML
-    private TableColumn<MusicianSong, Integer> ratingColumn;
+    private TableColumn<MusicianSongEntity, Integer> ratingColumn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,7 +60,7 @@ public class SongTableController extends BaseIncludeController<MusicianPaneContr
     }
     
     private void setTableValue() {
-        List<MusicianSong> musicianSongs = repositoryService.getMusicianSongRepository().selectJoinByMusician(paneController.getMusician());
+        List<MusicianSongEntity> musicianSongs = repositoryService.getMusicianSongRepository().selectMusicianSongByMusician(paneController.getMusician());
         clearSelectionTable();
         songTableView.getItems().clear();
         songTableView.setItems(FXCollections.observableArrayList(musicianSongs));
@@ -101,7 +101,7 @@ public class SongTableController extends BaseIncludeController<MusicianPaneContr
     
     private void sort() {
         clearSelectionTable();
-        songTableView.getItems().sort(Comparator.comparing((MusicianSong musicianSong) -> musicianSong.getSong().getName()));
+        songTableView.getItems().sort(Comparator.comparing((MusicianSongEntity musicianSong) -> musicianSong.getSong().getName()));
     }
     
     private void clearSelectionTable() {
@@ -120,12 +120,12 @@ public class SongTableController extends BaseIncludeController<MusicianPaneContr
             }
             // если лкм выбрана запись - показать её
             if (selectedItem != null) {
-                Song song = repositoryService.getSongRepository().selectById(selectedItem.getSong().getId());
+                SongEntity song = repositoryService.getSongRepository().selectById(selectedItem.getSong().getId());
                 requestPageService.songPane(song);
             }
         }
         else if (mouseEvent.getButton() == MouseButton.SECONDARY) { 
-            MusicianSong newMusicianSong = new MusicianSong();
+            MusicianSongEntity newMusicianSong = new MusicianSongEntity();
             newMusicianSong.setId_musician(paneController.getMusician().getId());
             contextMenuService.add(ADD_MUSICIAN_SONG, newMusicianSong);                    
             if (selectedItem != null) {

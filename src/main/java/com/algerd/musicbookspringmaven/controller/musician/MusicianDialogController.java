@@ -19,20 +19,20 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
+import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.controller.helper.inputImageBox.DialogImageBoxController;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import com.algerd.musicbookspringmaven.entity.Musician;
+import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
 import com.algerd.musicbookspringmaven.Params;
-import com.algerd.musicbookspringmaven.entity.Genre;
-import com.algerd.musicbookspringmaven.entity.Instrument;
-import com.algerd.musicbookspringmaven.entity.MusicianGenre;
-import com.algerd.musicbookspringmaven.entity.MusicianInstrument;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
+import com.algerd.musicbookspringmaven.repository.Instrument.InstrumentEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
+import com.algerd.musicbookspringmaven.repository.MusicianInstrument.MusicianInstrumentEntity;
 import com.algerd.musicbookspringmaven.controller.helper.choiceCheckBox.ChoiceCheckBoxController;
 
 public class MusicianDialogController extends BaseDialogController {
     
-    private Musician musician;
+    private MusicianEntity musician;
     private final IntegerProperty rating = new SimpleIntegerProperty();
      
     @FXML
@@ -48,7 +48,7 @@ public class MusicianDialogController extends BaseDialogController {
     @FXML
     private Spinner<Integer> ratingSpinner;
     @FXML
-    private ListView<Genre> genreListView;
+    private ListView<GenreEntity> genreListView;
     @FXML
     private TextArea commentTextArea;
     
@@ -59,11 +59,11 @@ public class MusicianDialogController extends BaseDialogController {
     @FXML   
     private AnchorPane includedGenreChoiceCheckBox;
     @FXML
-    private ChoiceCheckBoxController<Genre> includedGenreChoiceCheckBoxController; 
+    private ChoiceCheckBoxController<GenreEntity> includedGenreChoiceCheckBoxController; 
     @FXML   
     private AnchorPane includedInstrumentChoiceCheckBox;
     @FXML
-    private ChoiceCheckBoxController<Instrument> includedInstrumentChoiceCheckBoxController; 
+    private ChoiceCheckBoxController<InstrumentEntity> includedInstrumentChoiceCheckBoxController; 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {       
@@ -86,13 +86,13 @@ public class MusicianDialogController extends BaseDialogController {
     }
     
     private void initGenreChoiceCheckBox() {
-        List<Genre> musicianGenres = new ArrayList<>();
+        List<GenreEntity> musicianGenres = new ArrayList<>();
         if (edit) {        
-            repositoryService.getMusicianGenreRepository().selectJoinByMusician(musician).stream().forEach(musicianGenre -> {
+            repositoryService.getMusicianGenreRepository().selectMusicianGenreByMusician(musician).stream().forEach(musicianGenre -> {
                 musicianGenres.add(musicianGenre.getGenre());
             });
         }
-        Map<Genre, ObservableValue<Boolean>> map = new HashMap<>();
+        Map<GenreEntity, ObservableValue<Boolean>> map = new HashMap<>();
         repositoryService.getGenreRepository().selectAll().stream().forEach(genre -> {                     
             map.put(genre, new SimpleBooleanProperty(musicianGenres.contains(genre)));
         });
@@ -100,13 +100,13 @@ public class MusicianDialogController extends BaseDialogController {
     } 
     
     private void initInstrumentChoiceCheckBox() {
-        List<Instrument> musicianInstruments = new ArrayList<>();
+        List<InstrumentEntity> musicianInstruments = new ArrayList<>();
         if (edit) {        
-            repositoryService.getMusicianInstrumentRepository().selectJoinByMusician(musician).stream().forEach(musicianInstrument -> {
+            repositoryService.getMusicianInstrumentRepository().selectMusicianInstrumentByMusician(musician).stream().forEach(musicianInstrument -> {
                 musicianInstruments.add(musicianInstrument.getInstrument());
             });
         }
-        Map<Instrument, ObservableValue<Boolean>> map = new HashMap<>();
+        Map<InstrumentEntity, ObservableValue<Boolean>> map = new HashMap<>();
         repositoryService.getInstrumentRepository().selectAll().stream().forEach(instrument -> {                     
             map.put(instrument, new SimpleBooleanProperty(musicianInstruments.contains(instrument)));
         });
@@ -130,25 +130,25 @@ public class MusicianDialogController extends BaseDialogController {
                 repositoryService.getMusicianRepository().save(musician);   
             } else {           
                 // Cначала удалить все жанры из бд для музыканта, а потом добавить
-                repositoryService.getMusicianGenreRepository().deleteByMusician(musician);
+                repositoryService.getMusicianGenreRepository().deleteMusicianGenreByMusician(musician);
                 // Cначала удалить все инструменты из бд для музыканта, а потом добавить
-                repositoryService.getMusicianInstrumentRepository().deleteByMusician(musician);
+                repositoryService.getMusicianInstrumentRepository().deleteMusicianInstrumentByMusician(musician);
             } 
             // Извлечь жанры из списка и сохранить их в связке связанные с музыкантом
-            for (Genre genre : includedGenreChoiceCheckBoxController.getItemMap().keySet()) {
+            for (GenreEntity genre : includedGenreChoiceCheckBoxController.getItemMap().keySet()) {
                 ObservableValue<Boolean> value = includedGenreChoiceCheckBoxController.getItemMap().get(genre);
                 if (value.getValue()) {
-                    MusicianGenre musicianGenre = new MusicianGenre();
+                    MusicianGenreEntity musicianGenre = new MusicianGenreEntity();
                     musicianGenre.setId_musician(musician.getId());
                     musicianGenre.setId_genre(genre.getId());
                     repositoryService.getMusicianGenreRepository().save(musicianGenre);
                 }
             }  
             // Извлечь инструменты из списка и сохранить их в связке связанные с музыкантом
-            for (Instrument instrument : includedInstrumentChoiceCheckBoxController.getItemMap().keySet()) {
+            for (InstrumentEntity instrument : includedInstrumentChoiceCheckBoxController.getItemMap().keySet()) {
                 ObservableValue<Boolean> value = includedInstrumentChoiceCheckBoxController.getItemMap().get(instrument);
                 if (value.getValue()) {
-                    MusicianInstrument musicianInstrument = new MusicianInstrument();
+                    MusicianInstrumentEntity musicianInstrument = new MusicianInstrumentEntity();
                     musicianInstrument.setId_musician(musician.getId());
                     musicianInstrument.setId_instrument(instrument.getId());
                     repositoryService.getMusicianInstrumentRepository().save(musicianInstrument);
@@ -226,7 +226,7 @@ public class MusicianDialogController extends BaseDialogController {
        
     @Override
     public void setEntity(Entity entity) {
-        musician = (Musician) entity;
+        musician = (MusicianEntity) entity;
         super.setEntity(entity);
     }
     

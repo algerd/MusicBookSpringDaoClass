@@ -7,14 +7,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Instrument;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Instrument.InstrumentEntity;
 import com.algerd.musicbookspringmaven.controller.helper.inputImageBox.DialogImageBoxController;
 import com.algerd.musicbookspringmaven.utils.Helper;
 
 public class InstrumentDialogController extends BaseDialogController {
 
-    private Instrument instrument;
+    private InstrumentEntity instrument;
     
     @FXML
     private AnchorPane view;
@@ -95,7 +95,7 @@ public class InstrumentDialogController extends BaseDialogController {
        
     @Override
     public void setEntity(Entity entity) {
-        instrument = (Instrument) entity;
+        instrument = (InstrumentEntity) entity;
         super.setEntity(entity);  
     }
     

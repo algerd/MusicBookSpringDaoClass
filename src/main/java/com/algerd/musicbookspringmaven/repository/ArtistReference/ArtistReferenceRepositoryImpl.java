@@ -1,7 +1,7 @@
 
 package com.algerd.musicbookspringmaven.repository.ArtistReference;
 
-import com.algerd.musicbookspringmaven.dbDriver.impl.CrudRepositoryImpl;
+import com.algerd.musicbookspringmaven.repository.impl.CrudRepositoryImpl;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.ArtistReference.query.SelectArtistReferenceByArtist;
 import java.util.List;

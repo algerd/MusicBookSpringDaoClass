@@ -20,8 +20,8 @@ import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Genre;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.controller.helper.inputImageBox.DialogImageBoxController;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.controller.helper.choiceCheckBox.ChoiceCheckBoxController;
@@ -47,7 +47,7 @@ public class ArtistDialogController extends BaseDialogController {
     @FXML   
     private AnchorPane includedChoiceCheckBox;
     @FXML
-    private ChoiceCheckBoxController<Genre> includedChoiceCheckBoxController;    
+    private ChoiceCheckBoxController<GenreEntity> includedChoiceCheckBoxController;    
  
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
@@ -61,13 +61,13 @@ public class ArtistDialogController extends BaseDialogController {
     }
     
     private void initGenreChoiceCheckBox() {
-        List<Genre> artistGenres = new ArrayList<>();
+        List<GenreEntity> artistGenres = new ArrayList<>();
         if (edit) {        
             repositoryService.getArtistGenreRepository().selectArtistGenreByArtist(artist).stream().forEach(artistGenre -> {
                 artistGenres.add(artistGenre.getGenre());
             });
         }
-        Map<Genre, ObservableValue<Boolean>> map = new HashMap<>();
+        Map<GenreEntity, ObservableValue<Boolean>> map = new HashMap<>();
         repositoryService.getGenreRepository().selectAll().stream().forEach(genre -> {                     
             map.put(genre, new SimpleBooleanProperty(artistGenres.contains(genre)));
         });
@@ -91,7 +91,7 @@ public class ArtistDialogController extends BaseDialogController {
                 repositoryService.getArtistGenreRepository().deleteArtistGenreByArtist(artist);
             }    
             // Извлечь жанры из списка и сохранить их в связке связанные с артистом             
-            for (Genre genre : includedChoiceCheckBoxController.getItemMap().keySet()) {
+            for (GenreEntity genre : includedChoiceCheckBoxController.getItemMap().keySet()) {
                 ObservableValue<Boolean> value = includedChoiceCheckBoxController.getItemMap().get(genre);    
                 if (value.getValue()) {
                     ArtistGenreEntity artistGenre = new ArtistGenreEntity();

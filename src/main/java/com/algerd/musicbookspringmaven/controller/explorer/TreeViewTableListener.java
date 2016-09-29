@@ -6,9 +6,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeView;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
-import com.algerd.musicbookspringmaven.dbDriver.Entity;
-import com.algerd.musicbookspringmaven.entity.Song;
-import com.algerd.musicbookspringmaven.dbDriver.impl.WrapChangedEntity;
+import com.algerd.musicbookspringmaven.repository.Entity;
+import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
+import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.service.RepositoryService;
 
 public class TreeViewTableListener {
@@ -93,9 +93,9 @@ public class TreeViewTableListener {
     
     private void addedSong(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {      
         Entity entity = ((WrapChangedEntity<Entity>) newValue).getNew();
-        if (entity != null && entity instanceof Song) {
+        if (entity != null && entity instanceof SongEntity) {
             artistTree.getSelectionModel().clearSelection();
-            Entity parentEntity = repositoryService.getAlbumRepository().selectById(((Song) entity).getId_album());
+            Entity parentEntity = repositoryService.getAlbumRepository().selectById(((SongEntity) entity).getId_album());
             searchTreeItem(rootTreeItem, parentEntity).reset();
         }    
     }
