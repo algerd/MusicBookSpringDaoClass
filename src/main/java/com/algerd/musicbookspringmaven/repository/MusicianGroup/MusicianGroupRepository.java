@@ -4,7 +4,6 @@ package com.algerd.musicbookspringmaven.repository.MusicianGroup;
 import com.algerd.musicbookspringmaven.repository.CrudRepository;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
-import com.algerd.musicbookspringmaven.repository.MusicianGroup.MusicianGroupEntity;
 import java.util.List;
 
 public interface MusicianGroupRepository extends CrudRepository<MusicianGroupEntity> {

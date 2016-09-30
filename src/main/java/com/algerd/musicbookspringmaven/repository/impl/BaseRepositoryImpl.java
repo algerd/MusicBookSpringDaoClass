@@ -4,7 +4,6 @@ package com.algerd.musicbookspringmaven.repository.impl;
 import com.algerd.musicbookspringmaven.repository.DbColumn;
 import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.annotation.Table;
-import com.algerd.musicbookspringmaven.repository.exception.DeleteFailedException;
 import com.algerd.musicbookspringmaven.repository.exception.InsertFailedException;
 import com.algerd.musicbookspringmaven.repository.exception.UpdateFailedException;
 import java.lang.reflect.Field;
@@ -21,13 +20,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import com.algerd.musicbookspringmaven.repository.BaseRepository;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public abstract class BaseRepositoryImpl<T extends Entity> implements BaseRepository<T> {
     
+    private static final Logger LOG = LogManager.getLogger(BaseRepositoryImpl.class);
     protected JdbcTemplate jdbcTemplate;
     private Class<T> entityType;
     private String tableName; 
@@ -87,7 +88,8 @@ public abstract class BaseRepositoryImpl<T extends Entity> implements BaseReposi
             return entity;
         }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOG.error("Error: ",  e);
         }
         return null;
     }
@@ -98,10 +100,7 @@ public abstract class BaseRepositoryImpl<T extends Entity> implements BaseReposi
 		PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
 			query, new int[] {Types.INTEGER}
         );        
-		int count = jdbcTemplate.update(pscf.newPreparedStatementCreator(new Object[] {entity.getId()}));
-        if (count != 1) {
-			throw new DeleteFailedException("Cannot delete entity");
-        }
+		jdbcTemplate.update(pscf.newPreparedStatementCreator(new Object[] {entity.getId()}));
 	}
 
     @Override
@@ -187,8 +186,9 @@ public abstract class BaseRepositoryImpl<T extends Entity> implements BaseReposi
                     values[i] = dbColumn.getter().invoke(entity);
                     ++i;
                 }
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                //e.printStackTrace();
+                LOG.error("Error: ",  e);
             }    
         }
         if (update) {

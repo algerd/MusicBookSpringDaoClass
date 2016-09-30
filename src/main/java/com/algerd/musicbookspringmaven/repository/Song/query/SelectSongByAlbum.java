@@ -2,8 +2,6 @@
 package com.algerd.musicbookspringmaven.repository.Song.query;
 
 import com.algerd.musicbookspringmaven.repository.BaseRepository;
-import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
-import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
 import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;

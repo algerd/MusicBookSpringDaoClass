@@ -21,8 +21,6 @@ public class ArtistTreeItem extends TreeItem {
     public ArtistTreeItem(Object obj, RepositoryService repositoryService) {
 		super(obj);	
         this.repositoryService = repositoryService;
-        //@Inject
-        //repositoryService = Main.getInstance().getRepositoryService();
 	}
     
     @Override 

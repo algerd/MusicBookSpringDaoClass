@@ -9,8 +9,12 @@ import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import static com.algerd.musicbookspringmaven.Params.DIR_IMAGES;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class ArtistTreeCell extends TreeCell<Entity> {
+    
+    private static final Logger LOG = LogManager.getLogger(ArtistTreeCell.class);
 
     @Override
     public void updateItem(Entity item, boolean empty) {
@@ -43,7 +47,8 @@ public class ArtistTreeCell extends TreeCell<Entity> {
 			imgView = new ImageView(img);
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+            LOG.error("Error: ",  e);
 		}
 		return imgView;
 	}

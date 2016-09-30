@@ -20,7 +20,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
-    
     private final SpringContext context = new SpringContext(this, AppConfig.class);
     
     @Autowired
@@ -29,10 +28,9 @@ public class Main extends Application {
     private RequestPageService requestPageService;
       
 	@Override
-	public void start(Stage stage) throws IOException {       
+	public void start(Stage stage) throws IOException {         
         context.registerSingleton("primaryStage", stage);      
-        context.init();
-        
+        context.init();      
         requestPageService.init();  
              
         FXMLLoader loader = springFxmlLoader.loadController(MainController.class);

@@ -2,7 +2,6 @@
 package com.algerd.musicbookspringmaven.repository.MusicianGenre;
 
 import com.algerd.musicbookspringmaven.repository.impl.CrudRepositoryImpl;
-import com.algerd.musicbookspringmaven.repository.exception.DeleteFailedException;
 import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
 import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
@@ -10,11 +9,8 @@ import com.algerd.musicbookspringmaven.repository.MusicianGenre.query.CountMusic
 import com.algerd.musicbookspringmaven.repository.MusicianGenre.query.DeleteMusicianGenreByMusician;
 import com.algerd.musicbookspringmaven.repository.MusicianGenre.query.SelectMusicianGenreByGenre;
 import com.algerd.musicbookspringmaven.repository.MusicianGenre.query.SelectMusicianGenreByMusician;
-import java.sql.ResultSet;
-import java.sql.Types;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 
 public class MusicianGenreRepositoryImpl extends CrudRepositoryImpl<MusicianGenreEntity> implements MusicianGenreRepository {
 

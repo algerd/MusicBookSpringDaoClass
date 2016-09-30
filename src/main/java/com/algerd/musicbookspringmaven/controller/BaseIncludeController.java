@@ -5,6 +5,7 @@ public abstract class BaseIncludeController<T extends PaneController> extends Ba
 
     protected T paneController;
     
+    @Override
     public void setPaneController(T paneController) {
         this.paneController = paneController;
         bootstrap();

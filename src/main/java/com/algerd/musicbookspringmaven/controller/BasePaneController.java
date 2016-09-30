@@ -6,9 +6,13 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BasePaneController extends BaseAwareController implements PaneController {
+    
+    private static final Logger LOG = LogManager.getLogger(BasePaneController.class);
     
     @FXML
     protected AnchorPane view;
@@ -20,8 +24,9 @@ public abstract class BasePaneController extends BaseAwareController implements 
         try {
             FXMLLoader loader = springFxmlLoader.loadController(getClass()); 
             view = loader.<AnchorPane>load();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            LOG.error("Error: ", e);
+            //e.printStackTrace();
         }
     }
    

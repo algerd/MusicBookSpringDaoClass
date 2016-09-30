@@ -1,7 +1,6 @@
 
 package com.algerd.musicbookspringmaven.repository;
 
-import com.algerd.musicbookspringmaven.repository.Entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

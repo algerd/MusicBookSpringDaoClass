@@ -8,6 +8,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Skin;
 import javafx.scene.control.TableView;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * TableView with visibleRowCountProperty.
@@ -16,7 +18,8 @@ import javafx.scene.control.TableView;
  */
 public class TableViewWithVisibleRowCount<T> extends TableView<T> {
 
-    private IntegerProperty visibleRowCount = new SimpleIntegerProperty(this, "visibleRowCount", 10);
+    private static final Logger LOG = LogManager.getLogger(TableViewWithVisibleRowCount.class);
+    private final IntegerProperty visibleRowCount = new SimpleIntegerProperty(this, "visibleRowCount", 10);
 
     public IntegerProperty visibleRowCountProperty() {
         return visibleRowCount;
@@ -24,7 +27,7 @@ public class TableViewWithVisibleRowCount<T> extends TableView<T> {
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new TableViewSkinX<T>(this);
+        return new TableViewSkinX<>(this);
     }
 
     /**
@@ -81,7 +84,8 @@ public class TableViewWithVisibleRowCount<T> extends TableView<T> {
             try {
                 prefHeight = getFlowPrefHeight(getVisibleRowCount());
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Error: ", e);
+                //e.printStackTrace();
             } 
             return prefHeight + getTableHeaderRow().prefHeight(width);
         }
@@ -99,7 +103,8 @@ public class TableViewWithVisibleRowCount<T> extends TableView<T> {
                 method.setAccessible(true);
                 return ((double) method.invoke(flow, index));
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Error: ", e);
+                //e.printStackTrace();
             }
             return height;
         }

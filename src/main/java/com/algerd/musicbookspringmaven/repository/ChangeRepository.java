@@ -1,7 +1,6 @@
 
 package com.algerd.musicbookspringmaven.repository;
 
-import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;

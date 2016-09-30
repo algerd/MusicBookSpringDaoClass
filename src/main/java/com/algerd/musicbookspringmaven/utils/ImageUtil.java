@@ -15,8 +15,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class ImageUtil {
+    
+    private static final Logger LOG = LogManager.getLogger(ImageUtil.class);
     
     public static Image readImage(File file) {	
         Image image = null;
@@ -25,8 +29,9 @@ public class ImageUtil {
                 BufferedImage bufferedImage = ImageIO.read(file);
                 image = SwingFXUtils.toFXImage(bufferedImage, null);
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            //e.printStackTrace();
+            LOG.error("Error: ", e);
         }
         return image;
     }
@@ -37,7 +42,8 @@ public class ImageUtil {
             ImageIO.write(bImage, imageFormat, file);  
         } 
         catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
+            //e.printStackTrace();
         }
     }
     
@@ -46,7 +52,8 @@ public class ImageUtil {
             Files.deleteIfExists(file.toPath());
         } 
         catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOG.error("Error: ", e);
         }
     }
     
@@ -112,8 +119,8 @@ public class ImageUtil {
 				}
 			} 
 			catch (IOException e) {
-				//System.out.println(e.getMessage());
-                e.printStackTrace();
+				LOG.error("Error: ", e);
+                //e.printStackTrace();
 			}
 		}		
 		return null;
