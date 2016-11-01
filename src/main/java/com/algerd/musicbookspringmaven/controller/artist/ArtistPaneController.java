@@ -19,11 +19,13 @@ import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ARTIST;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ARTIST;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ARTIST;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.SEPARATOR;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.SEPARATOR;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class ArtistPaneController extends BasePaneController {
       
     private ArtistEntity artist;

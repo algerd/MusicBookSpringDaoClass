@@ -1,6 +1,7 @@
 
 package com.algerd.musicbookspringmaven.service.impl;
 
+import com.algerd.musicbookspringmaven.service.ContextMenuItemType;
 import com.algerd.musicbookspringmaven.service.RequestDialogService;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,9 @@ import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import com.algerd.musicbookspringmaven.service.ContextMenuService;
 import com.algerd.musicbookspringmaven.service.DeleteAlertService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ContextMenuServiceImpl implements ContextMenuService {     
       
     @Autowired

@@ -21,9 +21,9 @@ import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
 import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
 import com.algerd.musicbookspringmaven.repository.MusicianInstrument.MusicianInstrumentEntity;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_MUSICIAN;
 
 public class MusicianGenreTableController extends BaseIncludeController<GenrePaneController> {
        

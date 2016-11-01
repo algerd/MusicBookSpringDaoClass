@@ -9,7 +9,9 @@ import com.algerd.musicbookspringmaven.repository.MusicianAlbum.query.SelectMusi
 import com.algerd.musicbookspringmaven.repository.MusicianAlbum.query.SelectMusicianAlbumByMusician;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class MusicianAlbumRepositoryImpl extends CrudRepositoryImpl<MusicianAlbumEntity> implements MusicianAlbumRepository {
 
     private SelectMusicianAlbumByMusician selectMusicianAlbumByMusician;

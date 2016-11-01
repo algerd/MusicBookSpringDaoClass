@@ -21,10 +21,12 @@ import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_SONG;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_SONG;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_SONG;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class SongPaneController extends BasePaneController {
    
     private ArtistEntity artist;

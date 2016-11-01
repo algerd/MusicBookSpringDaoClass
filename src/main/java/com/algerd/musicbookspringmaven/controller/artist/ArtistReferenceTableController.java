@@ -1,9 +1,9 @@
 package com.algerd.musicbookspringmaven.controller.artist;
 
 import com.algerd.musicbookspringmaven.controller.BaseIncludeController;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ARTIST_REFERENCE;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ARTIST_REFERENCE;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ARTIST_REFERENCE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_ARTIST_REFERENCE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_ARTIST_REFERENCE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_ARTIST_REFERENCE;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;

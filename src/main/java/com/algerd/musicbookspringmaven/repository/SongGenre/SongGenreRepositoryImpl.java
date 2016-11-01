@@ -11,7 +11,9 @@ import com.algerd.musicbookspringmaven.repository.SongGenre.query.SelectSongGenr
 import com.algerd.musicbookspringmaven.repository.SongGenre.query.SelectSongGenreBySong;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SongGenreRepositoryImpl extends CrudRepositoryImpl<SongGenreEntity> implements SongGenreRepository {
 
     private SelectSongGenreBySong selectSongGenreBySong;

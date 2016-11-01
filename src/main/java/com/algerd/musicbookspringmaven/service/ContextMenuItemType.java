@@ -1,5 +1,5 @@
 
-package com.algerd.musicbookspringmaven.service.impl;
+package com.algerd.musicbookspringmaven.service;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;

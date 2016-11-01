@@ -8,7 +8,9 @@ import com.algerd.musicbookspringmaven.repository.Album.query.CountAlbumByArtist
 import com.algerd.musicbookspringmaven.repository.Album.query.SelectAlbumByArtist;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class AlbumRepositoryImpl extends CrudRepositoryImpl<AlbumEntity> implements AlbumRepository {
      
     private CountAlbumByArtist countAlbumByArtist;

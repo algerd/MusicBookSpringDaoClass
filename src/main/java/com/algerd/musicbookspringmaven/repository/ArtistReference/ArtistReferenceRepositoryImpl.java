@@ -6,7 +6,9 @@ import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.ArtistReference.query.SelectArtistReferenceByArtist;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ArtistReferenceRepositoryImpl extends CrudRepositoryImpl<ArtistReferenceEntity> implements ArtistReferenceRepository {
    
     private SelectArtistReferenceByArtist selectArtistReferenceByArtist;

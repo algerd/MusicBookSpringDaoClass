@@ -11,7 +11,9 @@ import com.algerd.musicbookspringmaven.repository.MusicianInstrument.query.Selec
 import com.algerd.musicbookspringmaven.repository.MusicianInstrument.query.SelectMusicianInstrumentByMusician;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class MusicianInstrumentRepositoryImpl extends CrudRepositoryImpl<MusicianInstrumentEntity> implements MusicianInstrumentRepository {
   
     private SelectMusicianInstrumentByMusician selectMusicianInstrumentByMusician;

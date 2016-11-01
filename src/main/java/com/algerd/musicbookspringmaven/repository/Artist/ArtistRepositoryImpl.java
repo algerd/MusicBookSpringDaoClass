@@ -2,7 +2,9 @@
 package com.algerd.musicbookspringmaven.repository.Artist;
 
 import com.algerd.musicbookspringmaven.repository.impl.CrudRepositoryImpl;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ArtistRepositoryImpl extends CrudRepositoryImpl<ArtistEntity> implements ArtistRepository {   
      
     // запретить удаление записи с id = 1 (Unknown artist)

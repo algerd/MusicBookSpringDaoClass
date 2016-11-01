@@ -17,9 +17,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.repository.Musician.MusicianEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_MUSICIAN;
 
 public class MusicianTableController extends BaseIncludeController<InstrumentPaneController> {
   

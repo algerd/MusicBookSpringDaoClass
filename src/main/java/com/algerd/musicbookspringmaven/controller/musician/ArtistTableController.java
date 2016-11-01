@@ -17,9 +17,9 @@ import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.MusicianGroup.MusicianGroupEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN_GROUP;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN_GROUP;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_MUSICIAN_GROUP;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_MUSICIAN_GROUP;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_MUSICIAN_GROUP;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_MUSICIAN_GROUP;
 
 public class ArtistTableController extends BaseIncludeController<MusicianPaneController> {
         

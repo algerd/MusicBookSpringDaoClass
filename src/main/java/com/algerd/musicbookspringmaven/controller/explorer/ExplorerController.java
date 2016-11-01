@@ -18,7 +18,7 @@ import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.*;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExplorerController extends BaseAwareController implements Initializable {

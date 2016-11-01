@@ -18,9 +18,9 @@ import javafx.scene.control.Label;
 import com.algerd.musicbookspringmaven.repository.Artist.ArtistEntity;
 import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ARTIST;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ARTIST;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_ARTIST;
 
 public class ArtistGenreTableController extends BaseIncludeController<GenrePaneController> {
 

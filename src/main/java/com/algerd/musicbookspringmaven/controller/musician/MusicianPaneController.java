@@ -1,10 +1,10 @@
 package com.algerd.musicbookspringmaven.controller.musician;
 
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN_GROUP;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.SEPARATOR;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_MUSICIAN_GROUP;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.SEPARATOR;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +25,9 @@ import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class MusicianPaneController extends BasePaneController {
 
     private MusicianEntity musician; 

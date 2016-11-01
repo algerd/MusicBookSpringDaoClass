@@ -1,8 +1,8 @@
 package com.algerd.musicbookspringmaven.controller.musicians;
 
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_MUSICIAN;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_MUSICIAN;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_MUSICIAN;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -30,7 +30,9 @@ import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.repository.Instrument.InstrumentEntity;
 import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
 import com.algerd.musicbookspringmaven.repository.MusicianInstrument.MusicianInstrumentEntity;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class MusiciansPaneController extends BasePaneController {
 
     private MusicianEntity selectedItem;

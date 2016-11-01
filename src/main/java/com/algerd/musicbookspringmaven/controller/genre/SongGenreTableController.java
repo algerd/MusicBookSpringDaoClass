@@ -20,9 +20,9 @@ import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
 import com.algerd.musicbookspringmaven.repository.SongGenre.SongGenreEntity;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_SONG;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_SONG;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_SONG;
 
 public class SongGenreTableController extends BaseIncludeController<GenrePaneController> {
        

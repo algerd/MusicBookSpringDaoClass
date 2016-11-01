@@ -1,9 +1,9 @@
 package com.algerd.musicbookspringmaven.controller.genre;
 
 import com.algerd.musicbookspringmaven.controller.BaseIncludeController;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ALBUM;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ALBUM;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_ALBUM;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.AlbumGenre.AlbumGenreEntity;
 import java.net.URL;

@@ -16,9 +16,9 @@ import javafx.scene.layout.AnchorPane;
 import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.Helper;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ALBUM;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ALBUM;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_ALBUM;
 
 public class AlbumTableController extends BaseIncludeController<ArtistPaneController> {
     

@@ -7,7 +7,9 @@ import com.algerd.musicbookspringmaven.repository.Entity;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.algerd.musicbookspringmaven.controller.PaneController;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RequestPageServiceImpl implements RequestPageService {
     
     @Autowired

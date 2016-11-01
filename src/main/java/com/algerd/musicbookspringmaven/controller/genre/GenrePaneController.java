@@ -15,13 +15,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.Params;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_GENRE;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_GENRE;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_GENRE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_GENRE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_GENRE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_GENRE;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TabPane;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class GenrePaneController extends BasePaneController {
        
     private GenreEntity genre;

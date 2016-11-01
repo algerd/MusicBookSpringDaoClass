@@ -9,7 +9,9 @@ import com.algerd.musicbookspringmaven.repository.Song.query.SelectAllSongs;
 import com.algerd.musicbookspringmaven.repository.Song.query.SelectSongByAlbum;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SongRepositoryImpl extends CrudRepositoryImpl<SongEntity> implements SongRepository {
 
     private SelectSongByAlbum selectSongByAlbum;

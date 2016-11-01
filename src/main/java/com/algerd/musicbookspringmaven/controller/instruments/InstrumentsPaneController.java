@@ -22,10 +22,12 @@ import com.algerd.musicbookspringmaven.controller.BasePaneController;
 import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.Instrument.InstrumentEntity;
 import com.algerd.musicbookspringmaven.repository.MusicianInstrument.MusicianInstrumentEntity;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_INSTRUMENT;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_INSTRUMENT;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_INSTRUMENT;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_INSTRUMENT;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_INSTRUMENT;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_INSTRUMENT;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class InstrumentsPaneController extends BasePaneController {
    
     private InstrumentEntity selectedItem;

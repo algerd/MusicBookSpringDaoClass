@@ -17,7 +17,9 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DeleteAlertServiceImpl implements DeleteAlertService {
     
     @Autowired

@@ -1,8 +1,8 @@
 package com.algerd.musicbookspringmaven.controller.songs;
 
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_SONG;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_SONG;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_SONG;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_SONG;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -30,7 +30,9 @@ import com.algerd.musicbookspringmaven.utils.Helper;
 import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.repository.Song.SongEntity;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class SongsPaneController extends BasePaneController implements Initializable {
    
     private SongEntity selectedItem;

@@ -1,8 +1,8 @@
 package com.algerd.musicbookspringmaven.controller.artists;
 
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ARTIST;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ARTIST;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_ARTIST;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_ARTIST;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -29,7 +29,9 @@ import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.Params;
 import com.algerd.musicbookspringmaven.repository.ArtistGenre.ArtistGenreEntity;
 import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class ArtistsPaneController extends BasePaneController {
    
     private ArtistEntity selectedItem;

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
+@org.springframework.stereotype.Controller
 public class MainController implements Controller {
        
     @FXML

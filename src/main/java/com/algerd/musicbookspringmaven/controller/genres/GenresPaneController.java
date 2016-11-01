@@ -25,10 +25,12 @@ import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.Genre.GenreEntity;
 import com.algerd.musicbookspringmaven.repository.MusicianGenre.MusicianGenreEntity;
 import com.algerd.musicbookspringmaven.repository.SongGenre.SongGenreEntity;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_GENRE;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_GENRE;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_GENRE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_GENRE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_GENRE;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_GENRE;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class GenresPaneController extends BasePaneController {
     
     private GenreEntity selectedItem;

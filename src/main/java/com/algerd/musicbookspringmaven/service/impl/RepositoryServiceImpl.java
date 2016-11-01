@@ -18,7 +18,9 @@ import com.algerd.musicbookspringmaven.repository.SongGenre.SongGenreRepository;
 import com.algerd.musicbookspringmaven.repository.Song.SongRepository;
 import com.algerd.musicbookspringmaven.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RepositoryServiceImpl implements RepositoryService { 
     
     @Autowired

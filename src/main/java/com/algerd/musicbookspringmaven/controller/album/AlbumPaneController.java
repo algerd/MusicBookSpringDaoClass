@@ -1,10 +1,10 @@
 
 package com.algerd.musicbookspringmaven.controller.album;
 
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.ADD_ALBUM;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.DELETE_ALBUM;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.EDIT_ALBUM;
-import static com.algerd.musicbookspringmaven.service.impl.ContextMenuItemType.SEPARATOR;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.ADD_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.DELETE_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.EDIT_ALBUM;
+import static com.algerd.musicbookspringmaven.service.ContextMenuItemType.SEPARATOR;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,7 +26,9 @@ import com.algerd.musicbookspringmaven.repository.Album.AlbumEntity;
 import com.algerd.musicbookspringmaven.repository.Entity;
 import com.algerd.musicbookspringmaven.repository.impl.WrapChangedEntity;
 import com.algerd.musicbookspringmaven.utils.ImageUtil;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class AlbumPaneController extends BasePaneController {
       
     private ArtistEntity artist;
