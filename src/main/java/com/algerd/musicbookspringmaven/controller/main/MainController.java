@@ -17,9 +17,9 @@ public class MainController implements Controller {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void show(AnchorPane pane) {
+    public void show(AnchorPane view) {
         mainWindow.getChildren().clear();
-        mainWindow.getChildren().add(pane);
+        mainWindow.getChildren().add(view);
     }
             
 }
